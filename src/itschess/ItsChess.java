@@ -146,7 +146,7 @@ public class ItsChess {
         for(; i<7; i++)
         {
             tx--; ty--;
-            if(tx < 0 || ty < 0)
+            if(tx < 1 || ty < 1)
                 break;
         }
         
@@ -159,6 +159,28 @@ public class ItsChess {
             if(tx > 8 || ty > 8)
                 break;
         }
+        
+        tx = x; ty = y;
+        
+        int o=0;
+        for(; o<7; o++)
+        {
+            tx--; ty++;
+            if(tx < 1 || ty > 8)
+                break;
+        }
+        
+        tx = x; ty = y;
+        
+        int p=0;
+        for(; p<7; p++)
+        {
+            tx++; ty--;
+            if(tx > 8 || ty < 1)
+                break;
+        }
+        
+        
         
         byte[][] retval = new byte[i+j][2];
         
@@ -179,8 +201,30 @@ public class ItsChess {
             tx++; ty++;
             if(theBoard[(tx)][(ty)] == 0)
             {
-                retval[k][0] = (byte)(tx);
-                retval[k][1] = (byte)(ty);
+                retval[k+i][0] = (byte)(tx);
+                retval[k+i][1] = (byte)(ty);
+            }
+        }
+        
+        tx = x; ty = y;
+        for(int k=0; k<o; k++)
+        {
+            tx--; ty++;
+            if(theBoard[(tx)][(ty)] == 0)
+            {
+                retval[k+i+j][0] = (byte)(tx);
+                retval[k+i+j][1] = (byte)(ty);
+            }
+        }
+        
+        tx = x; ty = y;
+        for(int k=0; k<p; k++)
+        {
+            tx++; ty--;
+            if(theBoard[(tx)][(ty)] == 0)
+            {
+                retval[k+i+j+o][0] = (byte)(tx);
+                retval[k+i+j+o][1] = (byte)(ty);
             }
         }
         
