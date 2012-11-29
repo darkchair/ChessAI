@@ -15,25 +15,36 @@ public class ItsChess {
      */
     static byte depth = 1;
     static byte[][] theBoard;
+    static byte[][] possibleMoves;
     
     public class Board
     {
-        
+        public void move()
+        {
+            
+        }
     }
     
     public void alphaBetaSearch(ItsChess.Board board)
     {
+        Integer a = new Integer(-50000); Integer b = new Integer(50000);
+        int v = maxValue(board, a, b);
         
     }
     
     public int maxValue(ItsChess.Board board, Integer a, Integer b)
     {
-        int v = -5000000;//initial max value
-        int mv;//holds the current max
-        for(int i=0; i<actions.length; i++)
+        byte v = -100;//initial max value
+        byte mv = -99;//holds the current max
+        for(int i=0; i<possibleMoves.length; i++)
         {
             if(depth != 3)
+            {
+                board.move();
                 mv = minValue(board, a, b);
+            }
+            else
+                mv = utility(board);
             if(mv > v)
                 v = mv;
             if(v > b)
@@ -46,12 +57,17 @@ public class ItsChess {
     
     public int minValue(ItsChess.Board board, Integer a, Integer b)
     {
-        int v = 5000000;//initial min value
+        byte v = 100;//initial min value
         int mv = 0;//holds the current min
-        for(int i=0; i<actions.length; i++)
+        for(int i=0; i<possibleMoves.length; i++)
         {
             if(depth != 3)
+            {
+                board.move();
                 mv = maxValue(board, a, b);
+            }
+            else
+                mv = utility(board);
             if(mv < v)
                 v = mv;
             if(v < a)
@@ -63,7 +79,7 @@ public class ItsChess {
     }
     
     public byte[][] possibleMovesKnight(byte x, byte y)
-    {
+    {//returns a byte array of the possible moves a knight can make
         byte[][] retval = new byte[8][2];
         
         if(theBoard[(x-1)][(y+2)] == 0)
@@ -111,7 +127,7 @@ public class ItsChess {
     }
         
     public byte[][] possibleMovesRook(byte x, byte y)
-    {
+    {//returns a byte array of the possible moves a rook can make
         byte[][] retval = new byte[14][2];
         
         for(int i=0, m=y; i<7; i++, m++)
@@ -139,7 +155,7 @@ public class ItsChess {
     }
     
     public byte[][] possibleMovesBishop(byte x, byte y)
-    {
+    {//returns a byte array of the possible moves a bishop can make
         byte tx = x; byte ty = y;
         
         int i=0;
@@ -180,7 +196,7 @@ public class ItsChess {
                 break;
         }
         
-        
+        //------------------------------
         
         byte[][] retval = new byte[i+j][2];
         
