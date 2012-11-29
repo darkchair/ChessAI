@@ -39,7 +39,7 @@ public class ItsChess {
         for(int i=0; i<possibleMoves.length; i++)
         {
             if(depth != 3)
-            {
+            {//Begining by testing only to depth 3
                 board.move();
                 mv = minValue(board, a, b);
             }
@@ -62,7 +62,7 @@ public class ItsChess {
         for(int i=0; i<possibleMoves.length; i++)
         {
             if(depth != 3)
-            {
+            {//Begining by testing only to depth 3
                 board.move();
                 mv = maxValue(board, a, b);
             }
@@ -198,7 +198,7 @@ public class ItsChess {
         
         //------------------------------
         
-        byte[][] retval = new byte[i+j][2];
+        byte[][] retval = new byte[i+j+o+p][2];
         
         tx = x; ty = y;
         for(int k=0; k<i; k++)
