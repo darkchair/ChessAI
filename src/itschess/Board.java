@@ -18,19 +18,18 @@ public class Board
         board[0] = holder; 
         for(int i = 0; i < 8; i ++)
         {
-                board[1][i] = -6;
-
+            board[1][i] = -6;
         }
         for(int i = 2; i < 6; i ++)
         {
                 for(int j = 0; j < 8; j ++)
                 {
-                        board[i][j] = 0;
+                    board[i][j] = 0;
                 }
         }
         for(int i = 0; i < 8; i ++)
         {
-                board[6][i] = 6;
+            board[6][i] = 6;
 
         }
         board[7][0] = 3;
@@ -44,10 +43,10 @@ public class Board
 
         for(byte i = 0; i < 8; i ++)
         {
-                for(byte j = 0; j <8; j++)
-                {
-                        attackboard[i][j] = 0;
-                }
+            for(byte j = 0; j <8; j++)
+            {
+                attackboard[i][j] = 0;
+            }
         }
     }
 
@@ -105,7 +104,13 @@ public class Board
 
     public void move()
     {
-
+        //not sure how to implement this
+    }
+    
+    public void undo()
+    {
+        //keep track of the moves made in a static list,
+        //and then undo them from the list?
     }
 
     public byte[][] possibleMovesPB(byte x, byte y)

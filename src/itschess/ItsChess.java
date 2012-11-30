@@ -24,7 +24,7 @@ public class ItsChess {
     }
     
     public byte maxValue(Board board, byte a, byte b)
-    {
+    {//a = alpha, b = beta
         byte v = -100;//initial max value
         byte mv = -99;//holds the current max
         for(int i=0; i<possibleMoves.length; i++)
@@ -32,22 +32,31 @@ public class ItsChess {
             if(depth != 3)
             {//Begining by testing only to depth 3
                 board.move();
+                depth++;
                 mv = minValue(board, a, b);
             }
             else
                 mv = utility(board);
             if(mv > v)
                 v = mv;
-            if(v >= b)
-                return v;
+            if(v >= b)      
+            {
+                board.undo();
+                return v;  
+            }
             if(v > a)
                 a = v;
+            
+            board.undo();
         }
+        
+        board.undo();
+        depth--;
         return v;
     }
     
     public byte minValue(Board board, byte a, byte b)
-    {
+    {//a = alpha, b = beta
         byte v = 100;//initial min value
         byte mv = 99;//holds the current min
         for(int i=0; i<possibleMoves.length; i++)
@@ -55,17 +64,22 @@ public class ItsChess {
             if(depth != 3)
             {//Begining by testing only to depth 3
                 board.move();
+                depth++;
                 mv = maxValue(board, a, b);
             }
             else
                 mv = utility(board);
             if(mv < v)
                 v = mv;
-            if(v <= a)
-                return v;
+            if(v <= a)      {
+                board.undo();
+                return v;   }
             if(v < b)
                 b = v;
+            board.undo();
         }
+        board.undo();
+        depth--;
         return v;
     }
     
