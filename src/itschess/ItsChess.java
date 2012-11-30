@@ -81,7 +81,8 @@ public class ItsChess {
     
     public byte utility(ItsChess.Board board)
     {
-        
+        //return 200(k) + 9(q) + 5(r) + 3(b+n) + (p) - 0.5(d+s+i) + 0.1(m);
+        return 0;
     }
     
     public byte[][] possibleMovesKnight(ItsChess.Board board, byte x, byte y)
@@ -135,25 +136,82 @@ public class ItsChess {
     public byte[][] possibleMovesRook(ItsChess.Board board, byte x, byte y)
     {//returns a byte array of the possible moves a rook can make
         byte[][] retval = new byte[14][2];
+        byte sizecount = 0;
         
-        for(int i=0, m=y; i<7; i++, m++)
+        for(byte i=x, m=y; i<8; i++)
         {
-            if(m==7)
-                m = 0;
-            if(board.theBoard[(x)][(m)] == 0)
+            if(board.theBoard[(i)][(m)] == 0)
             {
-                retval[i][0] = (byte)(x);
-                retval[i][1] = (byte)(m);
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(i != 7)
+                {
+                    retval[sizecount][0] = (byte)(i+1);
+                    retval[sizecount][1] = (byte)(m);
+                    sizecount++;
+                }
+                break;
             }
         }
-        for(int i=0, m=x; i<7; i++, m++)
+        for(byte i=x, m=y; i>0; i--)
         {
-            if(m==7)
-                m = 0;
-            if(board.theBoard[(m)][(y)] == 0)
+            if(board.theBoard[(i)][(m)] == 0)
             {
-                retval[i][0] = (byte)(m);
-                retval[i][1] = (byte)(y);
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(i != 1)
+                {
+                    retval[sizecount][0] = (byte)(i-1);
+                    retval[sizecount][1] = (byte)(m);
+                    sizecount++;
+                }
+                break;
+            }
+        }
+        for(byte i=x, m=y; m<8; m++)
+        {
+            if(board.theBoard[(i)][(m)] == 0)
+            {
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(m != 7)
+                {
+                    retval[sizecount][0] = (byte)(i);
+                    retval[sizecount][1] = (byte)(m+1);
+                    sizecount++;
+                }
+                break;
+            }
+        }
+        for(byte i=x, m=y; m>0; m--)
+        {
+            if(board.theBoard[(i)][(m)] == 0)
+            {
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(m != 1)
+                {
+                    retval[sizecount][0] = (byte)(i);
+                    retval[sizecount][1] = (byte)(m-1);
+                    sizecount++;
+                }
+                break;
             }
         }
         
@@ -162,9 +220,93 @@ public class ItsChess {
     
     public byte[][] possibleMovesBishop(ItsChess.Board board, byte x, byte y)
     {//returns a byte array of the possible moves a bishop can make
+        byte[][] retval = new byte[13][2];
+        byte sizecount = 0;
+        
+        for(byte i=x, m=y; i<8 && m<8; i++,m++)
+        {
+            if(board.theBoard[(i)][(m)] == 0)
+            {
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(i != 7 && m != 7)
+                {
+                    retval[sizecount][0] = (byte)(i+1);
+                    retval[sizecount][1] = (byte)(m+1);
+                    sizecount++;
+                }
+                break;
+            }
+        }
+        for(byte i=x, m=y; i>0 && m<8; i--, m++)
+        {
+            if(board.theBoard[(i)][(m)] == 0)
+            {
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(i != 1 && m != 7)
+                {
+                    retval[sizecount][0] = (byte)(i-1);
+                    retval[sizecount][1] = (byte)(m+1);
+                    sizecount++;
+                }
+                break;
+            }
+        }
+        for(byte i=x, m=y; i<8 && m>0; i++, m--)
+        {
+            if(board.theBoard[(i)][(m)] == 0)
+            {
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(i != 7 && m != 1)
+                {
+                    retval[sizecount][0] = (byte)(i+1);
+                    retval[sizecount][1] = (byte)(m-1);
+                    sizecount++;
+                }
+                break;
+            }
+        }
+        for(byte i=x, m=y; i>0 && m>0; i--, m--)
+        {
+            if(board.theBoard[(i)][(m)] == 0)
+            {
+                retval[sizecount][0] = (byte)(i);
+                retval[sizecount][1] = (byte)(m);
+                sizecount++;
+            }
+            else
+            {
+                if(i != 1 && m != 1)
+                {
+                    retval[sizecount][0] = (byte)(i-1);
+                    retval[sizecount][1] = (byte)(m-1);
+                    sizecount++;
+                }
+                break;
+            }
+        }
+        
+        return retval;
+        
+        /*
+        
         byte tx = x; byte ty = y;
         
-        int i=0;
+        byte i=0;
         for(; i<7; i++)
         {
             tx--; ty--;
@@ -174,7 +316,7 @@ public class ItsChess {
         
         tx = x; ty = y;
         
-        int j=0;
+        byte j=0;
         for(; j<7; j++)
         {
             tx++; ty++;
@@ -184,7 +326,7 @@ public class ItsChess {
         
         tx = x; ty = y;
         
-        int o=0;
+        byte o=0;
         for(; o<7; o++)
         {
             tx--; ty++;
@@ -194,7 +336,7 @@ public class ItsChess {
         
         tx = x; ty = y;
         
-        int p=0;
+        byte p=0;
         for(; p<7; p++)
         {
             tx++; ty--;
@@ -250,7 +392,7 @@ public class ItsChess {
             }
         }
         
-        return retval;
+        return retval; */
     }
     
     
