@@ -50,7 +50,6 @@ public class ItsChess {
             board.undo();
         }
         
-        board.undo();
         depth--;
         return v;
     }
@@ -78,7 +77,7 @@ public class ItsChess {
                 b = v;
             board.undo();
         }
-        board.undo();
+        
         depth--;
         return v;
     }
