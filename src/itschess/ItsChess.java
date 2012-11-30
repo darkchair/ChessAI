@@ -18,12 +18,12 @@ public class ItsChess {
     
     public void alphaBetaSearch(Board board)
     {
-        Integer a = new Integer(-50000); Integer b = new Integer(50000);
+        byte a = -100; byte b = 100;//should these be ints or Integers?
         int v = maxValue(board, a, b);
         
     }
     
-    public byte maxValue(Board board, Integer a, Integer b)
+    public byte maxValue(Board board, byte a, byte b)
     {
         byte v = -100;//initial max value
         byte mv = -99;//holds the current max
@@ -38,15 +38,15 @@ public class ItsChess {
                 mv = utility(board);
             if(mv > v)
                 v = mv;
-            if(v > b)
+            if(v >= b)
                 return v;
             if(v > a)
-                a = new Integer(v);
+                a = v;
         }
         return v;
     }
     
-    public byte minValue(Board board, Integer a, Integer b)
+    public byte minValue(Board board, byte a, byte b)
     {
         byte v = 100;//initial min value
         byte mv = 99;//holds the current min
@@ -61,10 +61,10 @@ public class ItsChess {
                 mv = utility(board);
             if(mv < v)
                 v = mv;
-            if(v < a)
+            if(v <= a)
                 return v;
             if(v < b)
-                b = new Integer(v);
+                b = v;
         }
         return v;
     }
