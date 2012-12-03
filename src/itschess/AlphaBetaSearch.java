@@ -84,10 +84,12 @@ public class AlphaBetaSearch {
                 moves[depth] = board.chessMoves[depth];
                 v = mv;
             }
-            if(v <= a)      {
+            if(v <= a)      
+            {
                 board.undo(depth);
                 depth--;
-                return v;   }
+                return v;   
+            }
             if(v < b)
                 b = v;
             

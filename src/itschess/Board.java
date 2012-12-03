@@ -35,7 +35,8 @@ public class Board {
 
     public byte[][] possibleMoves;
 
-    public Board (){
+    public Board ()
+    {
         byte[] holder = {-3,-5,-4,-2,-1,-4,-5,-3};
         board[0] = holder; 
         for(int i = 0; i < 8; i ++)
@@ -79,7 +80,7 @@ public class Board {
         byte y = 0;
         byte x = 0;
         byte move = 0;
-        
+        //Initialize
         if(d == 0)
         {
                 y = (byte) (fy);
@@ -95,7 +96,7 @@ public class Board {
         else if(d == 2)
         {
                 y = (byte)(ty);
-                x = (byte)(tx);  
+                x = (byte)(tx);
                 move = tmove;
         }
         //gatherMoves(y, x);
@@ -107,35 +108,37 @@ public class Board {
         //            x++;
         //    }
         //move = 0;
+        //Iterate through the board
         for(; y < 8; y++)
         {
-
+            
             for(; x < 8; x++)
             {
                 if(depth == 1)
                 {
                     if(board[y][x] < 0)
-                    {
-                        sx = x;
-                        sy = y;
-                        //smove = 0;
-                        //smove++;
+                    {//if there is a piece to move (black turn)
 
                         gatherMoves(y, x);
-                        if(smove > possibleMoves.length)
-                        {
-                            x++; sx++; move = 0;
-                            if(x == 8)
-                            {
-                                y++; sy++;
-                                x=0; sx=0;
-                            }
+                        if(smove >= possibleMoves.length)
+                        {//If we've checked all the moves continue
+//                            x++; sx++; move = 0; smove = 0;
+//                            if(x == 8)
+//                            {
+//                                y++; sy++;
+//                                x=0; sx=0;
+//                            }
+//                            x--;
                             continue;
                         }
-                        if(possibleMoves[move][0] != 100)
+                        for(; move<possibleMoves.length; move++)
                         {
+                            if(possibleMoves[move][0] != 100)
+                            {//If we find a move return it
                                 movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
+                                smove = move; sx = x; sy = y;
                                 return;
+                            }
                         }
 
                     }
@@ -144,52 +147,54 @@ public class Board {
                 else
                 {
                     if(board[y][x] > 0)
-                    {//if there is a piece to move
-                            
-                            
-                            gatherMoves(y, x);
-                            
-                            if(depth == 0 && (fmove >= possibleMoves.length))
-                            {
-                                x++; fx++; move = 0;
-                                if(x == 8)
-                                {
-                                    y++; fy++;
-                                    x=0; fx=0;
-                                }
+                    {//if there is a piece to move (white turn)
+                        
+                        gatherMoves(y, x);
 
-                                fmove = 0;
-                                continue;
-                            }
-                            if(depth == 2 && (tmove >= possibleMoves.length))
-                            {
-                                x++; tx++; move = 0;
-                                if(x == 8)
+                        if(depth == 0 && (fmove >= possibleMoves.length))
+                        {//If we've checked all the moves continue
+//                            x++; fx++; move = 0; fmove = 0;
+//                            if(x == 8)
+//                            {
+//                                y++; fy++;
+//                                x=0; fx=0;
+//                            }
+
+                            continue;
+                        }
+                        if(depth == 2 && (tmove >= possibleMoves.length))
+                        {//If we've checked all the moves continue
+//                            x++; tx++; move = 0; tmove = 0;
+//                            if(x == 8)
+//                            {
+//                                y++; ty++;
+//                                x=0; tx=0;
+//                            }
+
+                            continue;
+                        }
+                        for(; move<possibleMoves.length; move++)
+                        {
+                            if(possibleMoves[move][0] != 100)
+                            {//If we find a move return it
+                                movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
+                                if(depth == 0)
                                 {
-                                    y++; ty++;
-                                    x=0; tx=0;
+                                    fmove = move; fx = x; fy = y;
                                 }
-                                tmove = 0;
-                                continue;
-                            }
-                            for(int i=move; i<possibleMoves.length; i++)
-                            {
-                                if(possibleMoves[i][0] != 100)
+                                if(depth == 2)
                                 {
-                                    movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
-                                    if(depth == 0)
-                                        fmove = move;
-                                    if(depth == 2)
-                                        tmove = move;
-                                    return;
+                                    tmove = move; tx = x; ty = y;
                                 }
-                                move++;
+                                return;
                             }
+                        }
                             
                     }
                 }
             }
             x = 0;
+            
         }
         
         if(depth == 0)
@@ -199,16 +204,14 @@ public class Board {
                 tx = 0;
                 ty = 0;
                 tmove = 0;
-                AlphaBetaSearch.depth = 1;
-
-
+               // AlphaBetaSearch.depth = 1;
         }
         else if(depth == 1)
         {
-                sx= 0;
+                sx = 0;
                 sy = 0;
                 smove =0;
-                AlphaBetaSearch.depth = 0;
+               // AlphaBetaSearch.depth = 0;
         }
         //}
         //else
