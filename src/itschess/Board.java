@@ -143,7 +143,6 @@ public class Board {
                         }
                         move = 0; smove = 0;
                     }
-                    
                 }
                 else
                 {
@@ -398,9 +397,9 @@ public class Board {
     public void movePiece(byte y, byte x, byte y1, byte x1)
     {
             String retVal = "";
-            retVal += board[y][x];
+            retVal += Math.abs(board[y][x]);
             board[y1][x1] = board[y][x];
-            retVal += "" + y+ "" + x + "" + y1 + "" + x1;
+            retVal += "" + y + "" + x + "" + y1 + "" + x1;
             chessMoves[depth] =  retVal;
             board[y][x] = 0;
     }
