@@ -465,80 +465,129 @@ public class Board {
 
     public byte[][] possibleMovesN(byte x, byte y){
             byte[][] retVal = new byte[8][2];
-            if(x>0 && y<6 && board[(byte) x-1][(byte) y+2] == 0)//wrong
+            
+            boolean white;
+            if( board[(byte) y][(byte) x] > 0 )
             {
-                    retVal[0][0] = (byte) (x-1);
-                    retVal[0][1] = (byte) (y+2);
+                white = true;
+            }
+            else
+                white = false;
+            
+            if(x>0 && y<6)
+            {
+                if((board[(byte) y+2][(byte) x-1] == 0)
+                || (white && board[(byte) y+2][(byte) x-1] < 0)
+                || (!white && board[(byte) y+2][(byte) x-1] > 0))
+                {
+                    retVal[0][0] = (byte) (y+2);
+                    retVal[0][1] = (byte) (x-1);
+                }
             }
             else
             {
                     retVal[0][0] = (byte) 100;
                     retVal[0][1] = (byte) 100;
             }
-            if(x<7 && y<6 && board[ (byte) x+1][(byte) y+2] == 0)
+            if(x<7 && y<6)
             {
-                    retVal[1][0] = (byte) (x+1);
-                    retVal[1][1] = (byte) (y+2);
+                if((board[ (byte) y+2][(byte) x+1] == 0)
+                || (white && board[(byte) y+2][(byte) x+1] < 0)
+                || (!white && board[(byte) y+2][(byte) x+1] > 0))
+                {
+                    retVal[1][0] = (byte) (y+2);
+                    retVal[1][1] = (byte) (x+1);
+                }
             }
             else
             {
                     retVal[1][0] = (byte) 100;
                     retVal[1][1] = (byte) 100;
             }
-            if(x<6 && y<7 &&board[(byte) (x+(byte)2)][(byte) (y+(byte)1)] == 0)
+            if(x<6 && y<7)
             {
-                    retVal[2][0] = (byte) (x+2);
-                    retVal[2][1] = (byte) (y+1);
+                if((board[(byte) y+1][(byte) x+2] == 0)
+                || (white && board[(byte) y+1][(byte) x+2] < 0)
+                || (!white && board[(byte) y+1][(byte) x+2] > 0))
+                {
+                    retVal[2][0] = (byte) (y+1);
+                    retVal[2][1] = (byte) (x+2);
+                }
             }
             else
             {
                     retVal[2][0] = (byte) 100;
                     retVal[2][1] = (byte) 100;
             }
-            if(x>1 && y<7 && board[(byte) (x-2)][(byte) (y+1)] == 0)
+            if(x>1 && y<7)
             {
-                    retVal[3][0] = (byte) (x-(byte)2);
-                    retVal[3][1] = (byte) (y+(byte)1);
+                if((board[(byte) (y+1)][(byte) (x-2)] == 0)
+                || (white && board[(byte) (y+1)][(byte) (x-2)] < 0)
+                || (!white && board[(byte) (y+1)][(byte) (x-2)] > 0))
+                {
+                    retVal[3][0] = (byte) (y+1);
+                    retVal[3][1] = (byte) (x-2);
+                }
             }
             else
             {
                     retVal[3][0] = (byte)100;
                     retVal[3][1] = (byte)100;
             }
-            if(x<6 && y>0 && board[(byte) (x+2)][(byte) (y-1)] == 0)
+            if(x<6 && y>0 && board[(byte) (y-1)][(byte) (x+2)] == 0)
             {
-                    retVal[2][0] = (byte) (x+(byte)2);
-                    retVal[2][1] = (byte) (y-(byte)1);
+                if((board[(byte) (y-1)][(byte) (x+2)] == 0)
+                || (white && board[(byte) (y-1)][(byte) (x+2)] < 0)
+                || (!white && board[(byte) (y-1)][(byte) (x+2)] > 0))
+                {
+                    retVal[2][0] = (byte) (y-1);
+                    retVal[2][1] = (byte) (x+2);
+                }
             }
             else
             {
                     retVal[2][0] = (byte) 100;
                     retVal[2][1] = (byte) 100;
             }
-            if(x>1 && y>0 && board[(byte) (x-2)][(byte) (y-1)] == 0)
+            if(x>1 && y>0 && board[(byte) (y-1)][(byte) (x-2)] == 0)
             {
-                    retVal[3][0] = (byte) (x-(byte)2);
-                    retVal[3][1] = (byte) (y-(byte)1);
+                if((board[(byte) (y-1)][(byte) (x-2)] == 0)
+                || (white && board[(byte) (y-1)][(byte) (x-2)] < 0)
+                || (!white && board[(byte) (y-1)][(byte) (x-2)] > 0))
+                {
+                    retVal[3][0] = (byte) (y-1);
+                    retVal[3][1] = (byte) (x-2);
+                }
             }
             else
             {
                     retVal[3][0] = (byte)100;
                     retVal[3][1] = (byte)100;
             }
-            if(x<7 && y>1 && board[(byte) (x+(byte)1)][(byte) (y-(byte)2)] == 0)
+            if(x<7 && y>1 && board[(byte) (y-2)][(byte) (x+1)] == 0)
             {
-                    retVal[2][0] = (byte) (x+(byte)1);
-                    retVal[2][1] = (byte) (y-(byte)2);
+                if((board[(byte) (y-2)][(byte) (x+1)] == 0)
+                || (white && board[(byte) (y-2)][(byte) (x+1)] < 0)
+                || (!white && board[(byte) (y-2)][(byte) (x+1)] > 0))
+                {
+                    retVal[2][0] = (byte) (y-2);
+                    retVal[2][1] = (byte) (x+1);
+                }
             }
             else
             {
                     retVal[2][0] = (byte) 100;
                     retVal[2][1] = (byte) 100;
             }
-            if(x>0 && y>1 && board[(byte) (x-(byte)1)][(byte) (y-(byte)2)] == 0)
+            if(x>0 && y>1 && board[(byte) (y-2)][(byte) (x-1)] == 0)
             {
-                    retVal[3][0] = (byte) (x-(byte)1);
-                    retVal[3][1] = (byte) (y-(byte)2);
+                if((board[(byte) (y-2)][(byte) (x-1)] == 0)
+                || (white && board[(byte) (y-2)][(byte) (x-1)] < 0)
+                || (!white && board[(byte) (y-2)][(byte) (x-1)] > 0))
+                {
+                    retVal[3][0] = (byte) (y-2);
+                    retVal[3][1] = (byte) (x-1);
+                }
             }
             else
             {
