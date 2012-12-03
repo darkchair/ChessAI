@@ -140,7 +140,7 @@ public class Board {
                                 return;
                             }
                         }
-
+                        move = 0; smove = 0;
                     }
                     
                 }
@@ -189,7 +189,11 @@ public class Board {
                                 return;
                             }
                         }
-                            
+                        move = 0;
+                        if(depth == 0)
+                            fmove = move;
+                        if(depth == 2)
+                            tmove = move;
                     }
                 }
             }
@@ -204,14 +208,14 @@ public class Board {
                 tx = 0;
                 ty = 0;
                 tmove = 0;
-               // AlphaBetaSearch.depth = 1;
+                //done = true;
         }
         else if(depth == 1)
         {
                 sx = 0;
                 sy = 0;
                 smove =0;
-               // AlphaBetaSearch.depth = 0;
+                //done = true;
         }
         //}
         //else
@@ -399,7 +403,7 @@ public class Board {
             board[y][x] = 0;
     }
 
-    public byte[][] possibleMovesPB(byte x, byte y){
+    public byte[][] possibleMovesPB(byte y, byte x){
             byte[][] retVal = new byte[4][2];
             if(board[y+1][(byte) (x)] == 0)
             {
@@ -490,8 +494,9 @@ public class Board {
             return retVal;
     }
 
-    public byte[][] possibleMovesN(byte x, byte y){
-            byte[][] retVal = new byte[8][2];
+    public byte[][] possibleMovesN(byte y, byte x){
+        
+        byte[][] retVal = new byte[8][2];
             
             boolean white;
             if( board[(byte) y][(byte) x] > 0 )
@@ -624,7 +629,7 @@ public class Board {
             return retVal;
     }
 
-    public byte[][] possibleMovesRook(byte x, byte y)
+    public byte[][] possibleMovesRook(byte y, byte x)
     {//returns a byte array of the possible moves a rook can make
         byte[][] retval = new byte[14][2];
         byte sizecount = 0;
@@ -730,7 +735,7 @@ public class Board {
         return retval;
     }
 
-    public byte[][] possibleMovesBishop(byte x, byte y)
+    public byte[][] possibleMovesBishop(byte y, byte x)
     {//returns a byte array of the possible moves a bishop can make
         byte[][] retval = new byte[13][2];
         //System.out.println("X: " + x + "Y: " + y);
@@ -838,7 +843,7 @@ public class Board {
         return retval;
     }
 
-    public byte[][] possibleMovesQ(byte x, byte y){
+    public byte[][] possibleMovesQ(byte y, byte x){
         byte[][] retval = new byte[27][2];
         byte sizecount = 0;
 

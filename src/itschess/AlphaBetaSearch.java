@@ -40,6 +40,7 @@ public class AlphaBetaSearch {
             {
             	depth--;
                 mv = (byte) board.eval();
+                return mv;
             }
             
             if(mv > v)
@@ -60,6 +61,7 @@ public class AlphaBetaSearch {
             //depth--;
         }
         depth--;
+        //board.done = false;
         return v;
     }
     
@@ -76,9 +78,12 @@ public class AlphaBetaSearch {
                 mv = maxValue(a, b);
             }
             else
-            {	depth--;
+            {	
+                depth--;
                 mv = (byte)board.eval();
+                return mv;
             }
+            
             if(mv < v)
             {
                 moves[depth] = board.chessMoves[depth];
@@ -88,7 +93,7 @@ public class AlphaBetaSearch {
             {
                 board.undo(depth);
                 depth--;
-                return v;   
+                return v;
             }
             if(v < b)
                 b = v;
@@ -99,6 +104,7 @@ public class AlphaBetaSearch {
         }
         
         depth--;
+        //board.done = false;
         return v;
     }
     
