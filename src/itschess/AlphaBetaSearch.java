@@ -19,31 +19,32 @@ public class AlphaBetaSearch {
     {
         byte a = -100; byte b = 100;//should these be ints or Integers?
         board = new Board();
-        int v = maxValue( a, b);
-        
+        int v = maxValue(a, b);
         
     }
     
-    public static byte maxValue( byte a, byte b)
+    public static byte maxValue(byte a, byte b)
     {//a = alpha, b = beta
         byte v = -100;//initial max value
         byte mv = -99;//holds the current max
         while(!board.done)
         {
-            if(depth != 3)
-            {//Begining by testing only to depth 3
+            if(depth != 3)//Begining by testing only to depth 3
+            {
             	
                 board.move(depth);
                 depth++;
                 mv = minValue(a, b);
             }
-            else{
-            	depth --;
+            else
+            {
+            	depth--;
                 mv = (byte) board.eval();
             }
+            
             if(mv > v)
             {
-            	moves[depth] = board.chessMoves[depth];
+                moves[depth] = board.chessMoves[depth];
                 v = mv;
             }
             if(v >= b)      
@@ -54,11 +55,10 @@ public class AlphaBetaSearch {
             if(v > a)
                 a = v;
             
+            
             board.undo(depth);
-            //detatch last move
-            //
+            //depth--;
         }
-        
         depth--;
         return v;
     }
@@ -69,29 +69,31 @@ public class AlphaBetaSearch {
         byte mv = 99;//holds the current min
         while(!board.done)
         {
-            if(depth != 3)
-            {//Begining by testing only to depth 3
+            if(depth != 3)//Begining by testing only to depth 3
+            {
                 board.move(depth);
                 depth++;
                 mv = maxValue(a, b);
             }
             else
-            {	depth --;
+            {	depth--;
                 mv = (byte)board.eval();
             }
             if(mv < v)
             {
-            	moves[depth-1] = board.chessMoves[depth-1];
+                moves[depth] = board.chessMoves[depth];
                 v = mv;
             }
             if(v <= a)      {
                 board.undo(depth);
-                depth --;
+                depth--;
                 return v;   }
             if(v < b)
                 b = v;
+            
+            
             board.undo(depth);
-            depth --;
+            //depth--;
         }
         
         depth--;

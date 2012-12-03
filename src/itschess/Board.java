@@ -24,6 +24,8 @@ public class Board {
     byte fmove = 0;
     byte smove = 0;
     byte tmove = 0; 
+    
+    byte possibleLength = 0;
 
     public boolean done = false;
 
@@ -71,143 +73,166 @@ public class Board {
         }
     }
 
-    public void move(int d){
-            depth = d;
-            byte y = 0;
-            byte x = 0;
-            byte move = 0;
-            if(d == 0)
-            {
-                    y= (byte) (fy);
-                    x = (byte) (fx);
-                    move = fmove;
-
-            }
-            else if(d == 1)
-            {
-                    y = (byte)(sy);
-                    x = (byte)(sx);
-                    move = smove;
-            }
-            else if(d == 2)
-            {
-                    y = (byte)(ty);
-                    x = (byte)(tx);  
-                    move = tmove;
-            }
-            gatherMoves(y, x);
-            if(possibleMoves == null || move >= possibleMoves.length)
-            {
-                if(possibleMoves != null )
-                {
-                        y++;
-                        x++;
-                }
-                move = 0;
-                for(; y < 8; y++)
-                {
-
-                    for(; x < 8; x++)
-                    {
-                        if(depth == 1)
-                        {
-                                if(board[y][x] < 0)
-                                {
-                                        sx = y;
-                                        sy = x;
-                                        smove = 0;
-                                        smove++;
-
-                                        gatherMoves(y, x);
-                                        if(possibleMoves[move][0] != 100)
-                                        {
-                                                movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
-                                                move ++;
-                                        }
-
-                                        return;
-                                }
-                        }
-                        else
-                        {
-                                if(board[y][x] > 0)
-                                {
-                                        if(depth == 0)
-                                        {
-                                                fx = x;
-                                                fy = y;
-                                                fmove = 0;
-                                                fmove++;
-                                        }
-                                        else if(depth == 1)
-                                        {
-                                                sx = y;
-                                                sy = x;
-                                                smove = 0;
-                                                smove++;
-                                        }
-                                        else if(depth == 2)
-                                        {
-                                                tx = y;
-                                                ty = x;
-                                                tmove = 0;
-                                                tmove++;
-                                        }
-                                        gatherMoves(y, x);
-                                        if(possibleMoves[move][0] != 100)
-                                        {
-                                                movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
-                                                move ++;
-                                        }
-
-                                        return;
-                                }
-                        }
-                    }
-                    x = 0;
-                //	if(d == 0)
-                //		j = (byte) (fx);
-                //	else if(d == 1)
-                //		j = (byte)(sx);
-                //	else if(d == 2)
-                //		j = (byte)(tx); 
-                }
-                if(depth == 0)
-                        done = true;
-                else if(depth == 2)
-                {
-                        tx = 0;
-                        ty = 0;
-                        tmove = 0;
-                        AlphaBetaSearch.depth = 1;
-
-
-                }
-                else if(depth == 1)
-                {
-                        sx= 0;
-                        sy = 0;
-                        smove =0;
-                        AlphaBetaSearch.depth = 0;
-                }
-        }
-        else
+    public void move(int d)
+    {
+        depth = d;
+        byte y = 0;
+        byte x = 0;
+        byte move = 0;
+        
+        if(d == 0)
         {
-                if(possibleMoves[move][0] != 100)
-                {
-
-                        movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
-                }
+                y = (byte) (fy);
+                x = (byte) (fx);
+                move = fmove;
         }
+        else if(d == 1)
+        {
+                y = (byte)(sy);
+                x = (byte)(sx);
+                move = smove;
+        }
+        else if(d == 2)
+        {
+                y = (byte)(ty);
+                x = (byte)(tx);  
+                move = tmove;
+        }
+        //gatherMoves(y, x);
+        //if(possibleMoves == null || move >= possibleMoves.length)
+        //{
+        //    if(possibleMoves != null )
+        //    {
+        //            y++;
+        //            x++;
+        //    }
+        //move = 0;
+        for(; y < 8; y++)
+        {
+
+            for(; x < 8; x++)
+            {
+                if(depth == 1)
+                {
+                    if(board[y][x] < 0)
+                    {
+                        sx = x;
+                        sy = y;
+                        //smove = 0;
+                        //smove++;
+
+                        gatherMoves(y, x);
+                        if(smove > possibleMoves.length)
+                        {
+                            x++; sx++; move = 0;
+                            if(x == 8)
+                            {
+                                y++; sy++;
+                                x=0; sx=0;
+                            }
+                            continue;
+                        }
+                        if(possibleMoves[move][0] != 100)
+                        {
+                                movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
+                                return;
+                        }
+
+                    }
+                    
+                }
+                else
+                {
+                    if(board[y][x] > 0)
+                    {//if there is a piece to move
+                            
+                            
+                            gatherMoves(y, x);
+                            
+                            if(depth == 0 && (fmove >= possibleMoves.length))
+                            {
+                                x++; fx++; move = 0;
+                                if(x == 8)
+                                {
+                                    y++; fy++;
+                                    x=0; fx=0;
+                                }
+
+                                fmove = 0;
+                                continue;
+                            }
+                            if(depth == 2 && (tmove >= possibleMoves.length))
+                            {
+                                x++; tx++; move = 0;
+                                if(x == 8)
+                                {
+                                    y++; ty++;
+                                    x=0; tx=0;
+                                }
+                                tmove = 0;
+                                continue;
+                            }
+                            for(int i=move; i<possibleMoves.length; i++)
+                            {
+                                if(possibleMoves[i][0] != 100)
+                                {
+                                    movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
+                                    if(depth == 0)
+                                        fmove = move;
+                                    if(depth == 2)
+                                        tmove = move;
+                                    return;
+                                }
+                                move++;
+                            }
+                            
+                    }
+                }
+            }
+            x = 0;
+        }
+        
+        if(depth == 0)
+                done = true;
+        else if(depth == 2)
+        {
+                tx = 0;
+                ty = 0;
+                tmove = 0;
+                AlphaBetaSearch.depth = 1;
+
+
+        }
+        else if(depth == 1)
+        {
+                sx= 0;
+                sy = 0;
+                smove =0;
+                AlphaBetaSearch.depth = 0;
+        }
+        //}
+        //else
+        //{
+//                if(possibleMoves[move][0] != 100)
+//                {
+//
+//                        movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
+//                }
+        //}
     }
+    
     public void undo(int d)
     {
             depth = d;
-            char oldX = chessMoves[depth].charAt(2);
-            char oldY = chessMoves[depth].charAt(1);
-            char currX = chessMoves[depth].charAt(4);
-            char currY = chessMoves[depth].charAt(3);
-            movePiece((byte)currY,(byte)currX,(byte)oldY,(byte)oldX);
+            if(chessMoves[depth] != null)
+            {
+                String oldX = String.valueOf(chessMoves[depth].charAt(2));
+                String oldY = String.valueOf(chessMoves[depth].charAt(1));
+                String currX = String.valueOf(chessMoves[depth].charAt(4));
+                String currY = String.valueOf(chessMoves[depth].charAt(3));
+                movePiece((byte)Integer.parseInt(currY),(byte)Integer.parseInt(currX),
+                        (byte)Integer.parseInt(oldY),(byte)Integer.parseInt(oldX));
+            }
 
             if(depth == 1)
             {
@@ -219,7 +244,6 @@ public class Board {
                     sx = 0;
                     sy = 0;
             }
-
     }
 
     public void gatherMoves(byte y, byte x)
@@ -706,6 +730,7 @@ public class Board {
     public byte[][] possibleMovesBishop(byte x, byte y)
     {//returns a byte array of the possible moves a bishop can make
         byte[][] retval = new byte[13][2];
+        //System.out.println("X: " + x + "Y: " + y);
         byte sizecount = 0;
 
         for(byte i=x, m=y; i<8 && m<8; i++,m++)
@@ -1012,7 +1037,7 @@ public class Board {
 
     }
 
-
+    @Override
     public String toString() {
             String retVal = "";
             for(int i =0; i < 8; i ++)
