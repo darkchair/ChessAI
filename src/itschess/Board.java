@@ -136,6 +136,7 @@ public class Board {
                             if(possibleMoves[move][0] != 100)
                             {//If we find a move return it
                                 movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
+                                move++;
                                 smove = move; sx = x; sy = y;
                                 return;
                             }
@@ -178,6 +179,7 @@ public class Board {
                             if(possibleMoves[move][0] != 100)
                             {//If we find a move return it
                                 movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
+                                move++;
                                 if(depth == 0)
                                 {
                                     fmove = move; fx = x; fy = y;
