@@ -17,13 +17,13 @@ public class AlphaBetaSearch {
      
     public static void alphaBetaSearch()
     {
-        byte a = -100; byte b = 100;//should these be ints or Integers?
+        Byte a = -100; Byte b = 100;//should these be ints or Integers?
         board = new Board();
         int v = maxValue(a, b);
         
     }
     
-    public static byte maxValue(byte a, byte b)
+    public static byte maxValue(Byte a, Byte b)
     {//a = alpha, b = beta
         byte v = -100;//initial max value
         byte mv = -99;//holds the current max
@@ -31,7 +31,6 @@ public class AlphaBetaSearch {
         {
             if(depth != 2)//Begining by testing only to depth 3
             {
-            	
                 board.move(depth);
                 depth++;
                 mv = minValue(a, b);
@@ -56,16 +55,16 @@ public class AlphaBetaSearch {
             if(v > a)
                 a = v;
             
-            
             board.undo(depth);
             //depth--;
         }
+        //board.undo(depth);
         depth--;
-        //board.done = false;
+        board.done = false;
         return v;
     }
     
-    public static byte minValue(byte a, byte b)
+    public static byte minValue(Byte a, Byte b)
     {//a = alpha, b = beta
         byte v = 100;//initial min value
         byte mv = 99;//holds the current min
@@ -102,9 +101,9 @@ public class AlphaBetaSearch {
             board.undo(depth);
             //depth--;
         }
-        
+        //board.undo(depth);
         depth--;
-        //board.done = false;
+        board.done = false;
         return v;
     }
     
