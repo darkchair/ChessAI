@@ -20,92 +20,101 @@ public class AlphaBetaSearch {
         Byte a = -100; Byte b = 100;//should these be ints or Integers?
         board = new Board();
         int v = maxValue(a, b);
-        
+        System.out.println();
     }
     
     public static byte maxValue(Byte a, Byte b)
     {//a = alpha, b = beta
-        byte v = -100;//initial max value
-        byte mv = -99;//holds the current max
+        byte tempA = -100;//holds max value
+        byte hold = -99;//holds the current max
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 2
+            if(depth != 3)//Begining by testing only to depth 3
             {
                 board.move(depth);
                 depth++;
-                mv = minValue(a, b);
+                hold = minValue(a, b);
             }
             else
             {
-            	depth--;
-                mv = (byte) board.eval();
-                return mv;
+                hold = (byte) board.eval();
+                depth--;
+                //board.undo(depth);
+                return hold;
             }
             
-            if(mv > v)
+            if(hold > tempA)
             {//If this move is the best found so far
                 bestMoves[depth] = board.chessMoves[depth];
-                v = mv;
+                tempA = hold;
             }
-            if(v >= b)      
+            if(tempA >= b)      
             {//If this branch is bad skip it
-                //board.undo(depth);
-                return v;
+                //board.undo(depth); //dont know if this should be removed
+                if(depth == 0)
+                    System.out.println();
+                depth--;
+                return tempA;
             }
-            if(v > a)//not sure
-                a = v;
+            if(tempA > a)
+                a = tempA;
             
             board.undo(depth);
-            //depth--;
+            if(board.done)
+                System.out.println();
         }
         //board.chessMoves[depth] = null;
         depth--;
         board.done = false;
-        return v;
+        if(depth == 0)
+            System.out.println();
+        return tempA;
     }
     
     public static byte minValue(Byte a, Byte b)
     {//a = alpha, b = beta
-        byte v = 100;//initial min value
-        byte mv = 99;//holds the current min
+        byte tempB = 100;//initial min value
+        byte hold = 99;//holds the current min
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 2
+            if(depth != 3)//Begining by testing only to depth 3
             {
                 board.move(depth);
                 depth++;
-                mv = maxValue(a, b);
+                hold = maxValue(a, b);
             }
             else
             {	
+                hold = (byte)board.eval();
                 depth--;
-                mv = (byte)board.eval();
-                return mv;
+                //board.undo(depth);
+                return hold;
             }
             
-            if(mv < v)
+            if(hold < tempB)
             {//If this move is the best found so far
                 bestMoves[depth] = board.chessMoves[depth];
-                v = mv;
+                tempB = hold;
             }
-            if(v <= a)      
+            if(tempB <= a)      
             {//If this brach is bad skip it
-                //board.undo(depth);
+                //board.undo(depth); //dont know if this should be removed
                 depth--;
-                return v;
+                return tempB;
             }
-            if(v < b)//not sure
-                b = v;
+            if(tempB < b)
+                b = tempB;
             
             
             board.undo(depth);
-            //depth--;
+            if(board.done)
+                System.out.println();
         }
         
         depth--;
         //board.undo(depth);? no?
         board.done = false;
-        return v;
+        return tempB;
     }
     
     
