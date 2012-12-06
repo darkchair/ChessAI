@@ -14,7 +14,7 @@ public class ItsChess
         
         AlphaBetaSearch.alphaBetaSearch();
         for(int i = 0; i <3 ; i ++)
-            System.out.println(AlphaBetaSearch.moves[i]);
+            System.out.println(AlphaBetaSearch.bestMoves[i]);
         
     }
 }

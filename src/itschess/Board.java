@@ -179,8 +179,7 @@ public class Board {
                             {//If we find a move return it
                                 movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
                                 move++;
-                                if(depth == 0)
-                                {
+                                if(depth == 0){
                                     fmove = move; fx = x; fy = y;
                                 }
                                 if(depth == 2)
@@ -244,6 +243,10 @@ public class Board {
                 String tempStr = ""; 
                 tempStr += piece;
                 tempStr += oldY; tempStr += oldX; tempStr += currY; tempStr += currX;
+                if(tempStr.compareTo("60000") > 0)
+                {
+                    System.out.println();
+                }
                 chessMoves[depth] = tempStr;
             }
 
@@ -407,6 +410,10 @@ public class Board {
             retVal += Math.abs(board[y][x]);
             board[y1][x1] = board[y][x];
             retVal += "" + y + "" + x + "" + y1 + "" + x1;
+            if(retVal.compareTo("60000") > 0)
+            {
+                System.out.println();
+            }
             chessMoves[depth] =  retVal;
             board[y][x] = 0;
     }
@@ -414,7 +421,7 @@ public class Board {
     public byte[][] possibleMovesPB(byte y, byte x)
     {
             byte[][] retVal = new byte[4][2];
-            if(y<7 && board[y+1][(byte) (x)] == 0)
+            if(y<7 && board[y+1][(byte)(x)] == 0)
             {
                     retVal[0][0] = (byte) (y+1);
                     retVal[0][1] = x;
@@ -424,7 +431,7 @@ public class Board {
                     retVal[0][0] = (byte) 100;
                     retVal[0][1] = (byte) 100;
             }
-            if(y<6 && board[(byte) (y+2)][x] == 0)
+            if(y<6 && board[(byte)(y+2)][x] == 0)
             {
                     retVal[1][0] = (byte) (y+2);
                     retVal[1][1] = x;
@@ -434,7 +441,7 @@ public class Board {
                     retVal[0][0] = (byte) 100;
                     retVal[0][1] = (byte) 100;
             }
-            if(x<7 && y<7 && board[(byte) (y+1)][(byte) (x+1)] > 0)
+            if(x<7 && y<7 && board[(byte)(y+1)][(byte)(x+1)] > 0)
             {
 
                     retVal[2][0] = (byte) (y+1);
@@ -445,7 +452,7 @@ public class Board {
                     retVal[2][0] = (byte) 100;
                     retVal[2][1] = (byte) 100;
             }
-            if(x>0 && y<7 && board[(byte) (y+1)][(byte) (x-1)] > 0 )
+            if(x>0 && y<7 && board[(byte)(y+1)][(byte)(x-1)] > 0 )
             {
                     retVal[3][0] = (byte) (y+1);
                     retVal[3][1] = (byte) (x-1);
@@ -506,7 +513,6 @@ public class Board {
 
     public byte[][] possibleMovesN(byte y, byte x)
     {
-    
         byte[][] retVal = new byte[8][2];
             
         boolean white;
