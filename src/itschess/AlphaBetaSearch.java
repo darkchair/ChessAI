@@ -29,7 +29,7 @@ public class AlphaBetaSearch {
         byte mv = -99;//holds the current max
         while(!board.done)
         {
-            if(depth != 2)//Begining by testing only to depth 3
+            if(depth != 2)//Begining by testing only to depth 2
             {
                 board.move(depth);
                 depth++;
@@ -58,7 +58,7 @@ public class AlphaBetaSearch {
             board.undo(depth);
             //depth--;
         }
-        //board.undo(depth);
+        //board.chessMoves[depth] = null;
         depth--;
         board.done = false;
         return v;
@@ -70,7 +70,7 @@ public class AlphaBetaSearch {
         byte mv = 99;//holds the current min
         while(!board.done)
         {
-            if(depth != 2)//Begining by testing only to depth 3
+            if(depth != 2)//Begining by testing only to depth 2
             {
                 board.move(depth);
                 depth++;
