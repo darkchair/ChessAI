@@ -361,9 +361,9 @@ public class Board {
         int d = 0;
         int db = 0;
 
-        for(int i = 0; i < 7; i ++)
+        for(int i = 0; i < 8; i ++)
         {
-                for(int j = 0; j < 7; j++)
+                for(int j = 0; j < 8; j++)
                 {
                         if(board[i][j] == 1)
                                 k ++;
@@ -842,7 +842,8 @@ public class Board {
         return retval;
     }
 
-    public byte[][] possibleMovesQ(byte y, byte x){
+    public byte[][] possibleMovesQ(byte y, byte x)
+    {
         byte[][] retval = new byte[27][2];
         byte sizecount = 0;
 
@@ -1045,7 +1046,8 @@ public class Board {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
             String retVal = "";
             for(int i =0; i < 8; i ++)
             {
