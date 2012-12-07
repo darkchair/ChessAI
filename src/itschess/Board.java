@@ -13,6 +13,13 @@ public class Board {
     public byte board[][] = new byte [8][8];
     public byte attackboard[][] = new byte[8][8];
 
+    public boolean whiteMove = false;
+    public boolean colorWhite = true;
+    public boolean ourMove = false;
+    
+    public boolean ourCheckMate = false;
+    public boolean otherCheckMate = false;
+    public boolean gameOver = false;
 
     byte fx = 0;
     byte fy = 0;
@@ -34,6 +41,8 @@ public class Board {
     int depth = 0;
 
     public byte[][] possibleMoves;
+    
+    public double boardScore = 0;
 
     public Board ()
     {
@@ -72,6 +81,13 @@ public class Board {
                         attackboard[i][j] = 0;
                 }
         }
+//        byte[] holder = {-3, 0, -4, -5, -1, -4, 0, -3};
+//        board[0] = holder;
+//        holder = {-6, -6, 0, 0, -6, -6, -6, -6};
+//        board[1] = holder;
+//        board[2] = {0, 0, 0, 0, 0, -5, 0, 0};
+        
+        
     }
 
     public void move(int d)
@@ -111,7 +127,6 @@ public class Board {
         //Iterate through the board
         for(; y < 8; y++)
         {
-            
             for(; x < 8; x++)
             {
                 if(depth == 1)
@@ -120,17 +135,7 @@ public class Board {
                     {//if there is a piece to move (black turn)
 
                         gatherMoves(y, x);
-                        if(smove >= possibleMoves.length)
-                        {//If we've checked all the moves continue
-//                            x++; sx++; move = 0; smove = 0;
-//                            if(x == 8)
-//                            {
-//                                y++; sy++;
-//                                x=0; sx=0;
-//                            }
-//                            x--;
-                            continue;
-                        }
+
                         for(; move<possibleMoves.length; move++)
                         {
                             if(possibleMoves[move][0] != 100)
@@ -151,28 +156,6 @@ public class Board {
                         
                         gatherMoves(y, x);
 
-                        if(depth == 0 && (fmove >= possibleMoves.length))
-                        {//If we've checked all the moves continue
-//                            x++; fx++; move = 0; fmove = 0;
-//                            if(x == 8)
-//                            {
-//                                y++; fy++;
-//                                x=0; fx=0;
-//                            }
-
-                            continue;
-                        }
-                        if(depth == 2 && (tmove >= possibleMoves.length))
-                        {//If we've checked all the moves continue
-//                            x++; tx++; move = 0; tmove = 0;
-//                            if(x == 8)
-//                            {
-//                                y++; ty++;
-//                                x=0; tx=0;
-//                            }
-
-                            continue;
-                        }
                         for(; move<possibleMoves.length; move++)
                         {
                             if(possibleMoves[move][0] != 100)
@@ -198,8 +181,9 @@ public class Board {
                 }
             }
             x = 0;
-            
         }
+        
+        
         
         if(depth == 0)
                 done = true;
@@ -217,15 +201,6 @@ public class Board {
                 smove =0;
                 done = true;
         }
-        //}
-        //else
-        //{
-//                if(possibleMoves[move][0] != 100)
-//                {
-//
-//                        movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
-//                }
-        //}
     }
     
     public void undo(int d)

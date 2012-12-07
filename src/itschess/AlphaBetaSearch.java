@@ -37,7 +37,7 @@ public class AlphaBetaSearch {
             }
             else
             {
-                hold = (byte) board.eval();
+                hold = (byte) Evaluation.eval(board);
                 depth--;
                 //board.undo(depth);
                 return hold;
@@ -61,7 +61,7 @@ public class AlphaBetaSearch {
             
             board.undo(depth);
             if(board.done)
-                System.out.println();
+                System.out.println();//Never gets hit dont know why
         }
         //board.chessMoves[depth] = null;
         depth--;
@@ -85,7 +85,7 @@ public class AlphaBetaSearch {
             }
             else
             {	
-                hold = (byte)board.eval();
+                hold = (byte) Evaluation.eval(board);
                 depth--;
                 //board.undo(depth);
                 return hold;
@@ -108,7 +108,7 @@ public class AlphaBetaSearch {
             
             board.undo(depth);
             if(board.done)
-                System.out.println();
+                System.out.println();//Never gets hit dont know why
         }
         
         depth--;
