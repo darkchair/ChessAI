@@ -440,95 +440,95 @@ public class Board {
 
     public byte[][] possibleMovesPB(byte y, byte x)
     {
-            byte[][] retVal = new byte[4][2];
-            if(y<7 && board[y+1][(byte)(x)] == 0)
-            {
-                    retVal[0][0] = (byte) (y+1);
-                    retVal[0][1] = x;
-            }
-            else
-            {
-                    retVal[0][0] = (byte) 100;
-                    retVal[0][1] = (byte) 100;
-            }
-            if(y<6 && board[(byte)(y+2)][x] == 0)
-            {
-                    retVal[1][0] = (byte) (y+2);
-                    retVal[1][1] = x;
-            }
-            else
-            {
-                    retVal[0][0] = (byte) 100;
-                    retVal[0][1] = (byte) 100;
-            }
-            if(x<7 && y<7 && board[(byte)(y+1)][(byte)(x+1)] > 0)
-            {
+        byte[][] retVal = new byte[4][2];
+        if(y<7 && board[y+1][(byte)(x)] == 0)
+        {
+                retVal[0][0] = (byte) (y+1);
+                retVal[0][1] = x;
+        }
+        else
+        {
+                retVal[0][0] = (byte) 100;
+                retVal[0][1] = (byte) 100;
+        }
+        if(board[(byte)(y+2)][x] == 0 && board[y+1][(byte) (x)] == 0 && y == 1)
+        {
+                retVal[1][0] = (byte) (y+2);
+                retVal[1][1] = x;
+        }
+        else
+        {
+                retVal[0][0] = (byte) 100;
+                retVal[0][1] = (byte) 100;
+        }
+        if(x<7 && y<7 && board[(byte)(y+1)][(byte)(x+1)] > 0)
+        {
 
-                    retVal[2][0] = (byte) (y+1);
-                    retVal[2][1] = (byte) (x+1);
-            }
-            else
-            {
-                    retVal[2][0] = (byte) 100;
-                    retVal[2][1] = (byte) 100;
-            }
-            if(x>0 && y<7 && board[(byte)(y+1)][(byte)(x-1)] > 0 )
-            {
-                    retVal[3][0] = (byte) (y+1);
-                    retVal[3][1] = (byte) (x-1);
-            }
-            else
-            {
-                    retVal[3][0] = (byte)100;
-                    retVal[3][1] = (byte)100;
-            }
-            return retVal;
+                retVal[2][0] = (byte) (y+1);
+                retVal[2][1] = (byte) (x+1);
+        }
+        else
+        {
+                retVal[2][0] = (byte) 100;
+                retVal[2][1] = (byte) 100;
+        }
+        if(x>0 && y<7 && board[(byte)(y+1)][(byte)(x-1)] > 0 )
+        {
+                retVal[3][0] = (byte) (y+1);
+                retVal[3][1] = (byte) (x-1);
+        }
+        else
+        {
+                retVal[3][0] = (byte)100;
+                retVal[3][1] = (byte)100;
+        }
+        return retVal;
     }
 
     public byte[][] possibleMovesP(byte y, byte x)
     {
-            byte[][] retVal = new byte[4][2];
-            if(y>0 && board[y-1][(byte) (x)] == 0)
-            {
-                    retVal[0][0] = (byte) (y-1);
-                    retVal[0][1] = x;
-            }
-            else
-            {
-                    retVal[0][0] = (byte) 100;
-                    retVal[0][1] = (byte) 100;
-            }
-            if(y>1 &&board[y-2][(byte) (x)] == 0 && y == 6)
-            {
-                    retVal[1][0] = (byte)(y-2);
-                    retVal[1][1] = x;
-            }
-            else
-            {
-                    retVal[1][0] = (byte) 100;
-                    retVal[1][1] = (byte) 100;
-            }
-            if(y>0 && x<7 && board[(byte) (y-1)][(byte) (x+1)] < 0)
-            {
-                    retVal[2][0] = (byte) (y-1);
-                    retVal[2][1] = (byte) (x+1);
-            }
-            else
-            {
-                    retVal[2][0] = (byte) 100;
-                    retVal[2][1] = (byte) 100;
-            }
-            if(y>0 && x >0 && board[(byte) (y-1)][(byte) (x-1)] < 0)
-            {
-                    retVal[3][0] = (byte) (y-1);
-                    retVal[3][1] = (byte) (x-1);
-            }
-            else
-            {
-                    retVal[3][0] = (byte)100;
-                    retVal[3][1] = (byte)100;
-            }
-            return retVal;
+        byte[][] retVal = new byte[4][2];
+        if(y>0 && board[y-1][(byte) (x)] == 0)
+        {
+                retVal[0][0] = (byte) (y-1);
+                retVal[0][1] = x;
+        }
+        else
+        {
+                retVal[0][0] = (byte) 100;
+                retVal[0][1] = (byte) 100;
+        }
+        if(board[y-2][(byte) (x)] == 0 && board[y-1][(byte) (x)] == 0 && y == 6)
+        {
+                retVal[1][0] = (byte)(y-2);
+                retVal[1][1] = x;
+        }
+        else
+        {
+                retVal[1][0] = (byte) 100;
+                retVal[1][1] = (byte) 100;
+        }
+        if(y>0 && x<7 && board[(byte) (y-1)][(byte) (x+1)] < 0)
+        {
+                retVal[2][0] = (byte) (y-1);
+                retVal[2][1] = (byte) (x+1);
+        }
+        else
+        {
+                retVal[2][0] = (byte) 100;
+                retVal[2][1] = (byte) 100;
+        }
+        if(y>0 && x >0 && board[(byte) (y-1)][(byte) (x-1)] < 0)
+        {
+                retVal[3][0] = (byte) (y-1);
+                retVal[3][1] = (byte) (x-1);
+        }
+        else
+        {
+                retVal[3][0] = (byte)100;
+                retVal[3][1] = (byte)100;
+        }
+        return retVal;
     }
 
     public byte[][] possibleMovesN(byte y, byte x)
