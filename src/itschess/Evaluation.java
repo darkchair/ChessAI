@@ -38,9 +38,9 @@ public class Evaluation {
         double kingEndPenalty = 0;
         double bishopPenalty = 0;
 
-        for(int i = 0; i < 7; i ++)
+        for(int i = 0; i < 8; i ++)
         {
-            for(int j = 0; j < 7; j++)
+            for(int j = 0; j < 8; j++)
             {
                 if(board[i][j] == 0)
                         continue;
