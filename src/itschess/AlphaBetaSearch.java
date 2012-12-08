@@ -13,7 +13,7 @@ public class AlphaBetaSearch {
     public static byte depth = 0;
     static byte[][] possibleMoves;
     static Board board;
-    public static String[] bestMoves = new String[4];
+    public static String[] bestMoves = new String[5];
      
     public static void alphaBetaSearch()
     {
@@ -29,7 +29,7 @@ public class AlphaBetaSearch {
         byte hold = -99;//holds the current max
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 3
+            if(depth != 4)//Begining by testing only to depth 4
             {
                 board.move(depth);
                 depth++;
@@ -77,7 +77,7 @@ public class AlphaBetaSearch {
         byte hold = 99;//holds the current min
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 3
+            if(depth != 4)//Begining by testing only to depth 4
             {
                 board.move(depth);
                 depth++;

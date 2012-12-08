@@ -21,22 +21,26 @@ public class Board {
     public boolean otherCheckMate = false;
     public boolean gameOver = false;
 
-    byte fx = 0;
-    byte fy = 0;
-    byte sx = 0;
-    byte sy = 0;
-    byte tx = 0;
-    byte ty = 0;
+    byte firstX = 0;
+    byte firstY = 0;
+    byte secondX = 0;
+    byte secondY = 0;
+    byte thirdX = 0;
+    byte thirdY = 0;
+    byte fourthX = 0;
+    byte fourthY = 0;
+    
 
-    byte fmove = 0;
-    byte smove = 0;
-    byte tmove = 0; 
+    byte firstMove = 0;
+    byte secondMove = 0;
+    byte thirdMove = 0;
+    byte fourthMove = 0;
     
     byte possibleLength = 0;
 
     public boolean done = false;
 
-    public String[] chessMoves = new String[4];
+    public String[] chessMoves = new String[5];
 
     int depth = 0;
 
@@ -99,21 +103,27 @@ public class Board {
         //Initialize
         if(d == 0)
         {
-                y = (byte) (fy);
-                x = (byte) (fx);
-                move = fmove;
+            y = (byte) (firstY);
+            x = (byte) (firstX);
+            move = firstMove;
         }
         else if(d == 1)
         {
-                y = (byte)(sy);
-                x = (byte)(sx);
-                move = smove;
+            y = (byte)(secondY);
+            x = (byte)(secondX);
+            move = secondMove;
         }
         else if(d == 2)
         {
-                y = (byte)(ty);
-                x = (byte)(tx);
-                move = tmove;
+            y = (byte)(thirdY);
+            x = (byte)(thirdX);
+            move = thirdMove;
+        }
+        else if(d == 3)
+        {
+            y = (byte)(fourthY);
+            x = (byte)(fourthX);
+            move = fourthMove;
         }
         //gatherMoves(y, x);
         //if(possibleMoves == null || move >= possibleMoves.length)
@@ -129,7 +139,7 @@ public class Board {
         {
             for(; x < 8; x++)
             {
-                if(depth == 1)
+                if(depth%2 == 1)
                 {
                     if(board[y][x] < 0)
                     {//if there is a piece to move (black turn)
@@ -142,11 +152,20 @@ public class Board {
                             {//If we find a move return it
                                 movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
                                 move++;
-                                smove = move; sx = x; sy = y;
+                                if(depth == 1){
+                                    secondMove = move; secondX = x; secondY = y;
+                                }
+                                if(depth == 3){
+                                    fourthMove = move; fourthX = x; fourthY = y;
+                                }
                                 return;
                             }
                         }
-                        move = 0; smove = 0;
+                        move = 0;
+                        if(depth == 1)
+                            secondMove = 0;
+                        if(depth == 3)
+                            fourthMove = 0;
                     }
                 }
                 else
@@ -163,20 +182,20 @@ public class Board {
                                 movePiece(y,x,possibleMoves[move][0],possibleMoves[move][1]);
                                 move++;
                                 if(depth == 0){
-                                    fmove = move; fx = x; fy = y;
+                                    firstMove = move; firstX = x; firstY = y;
                                 }
                                 if(depth == 2)
                                 {
-                                    tmove = move; tx = x; ty = y;
+                                    thirdMove = move; thirdX = x; thirdY = y;
                                 }
                                 return;
                             }
                         }
                         move = 0;
                         if(depth == 0)
-                            fmove = move;
+                            firstMove = move;
                         if(depth == 2)
-                            tmove = move;
+                            thirdMove = move;
                     }
                 }
             }
@@ -187,18 +206,25 @@ public class Board {
         
         if(depth == 0)
                 done = true;
+        else if(depth == 3)
+        {
+                fourthX = 0;
+                fourthY = 0;
+                fourthMove = 0;
+                done = true;
+        }
         else if(depth == 2)
         {
-                tx = 0;
-                ty = 0;
-                tmove = 0;
+                thirdX = 0;
+                thirdY = 0;
+                thirdMove = 0;
                 done = true;
         }
         else if(depth == 1)
         {
-                sx = 0;
-                sy = 0;
-                smove =0;
+                secondX = 0;
+                secondY = 0;
+                secondMove =0;
                 done = true;
         }
     }
@@ -225,15 +251,20 @@ public class Board {
                 chessMoves[depth] = tempStr;
             }
 
-            if(depth == 1)
+            if(depth == 2)
             {
-                    tx = 0;
-                    ty = 0;
+                fourthX = 0;
+                fourthY = 0;
+            }
+            else if(depth == 1)
+            {
+                thirdX = 0;
+                thirdY = 0;
             }
             else if(depth == 0)
             {
-                    sx = 0;
-                    sy = 0;
+                secondX = 0;
+                secondY = 0;
             }
     }
 

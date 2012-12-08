@@ -13,7 +13,7 @@ public class ItsChess
     public static void main(String[] args) {
         
         AlphaBetaSearch.alphaBetaSearch();
-        for(int i = 0; i <3 ; i ++)
+        for(int i = 0; i < 4; i ++)
             System.out.println(AlphaBetaSearch.bestMoves[i]);
         
     }
