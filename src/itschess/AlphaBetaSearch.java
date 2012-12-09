@@ -31,7 +31,7 @@ public class AlphaBetaSearch {
         byte hold = -99;//holds the current max
         while(!board.done)
         {
-            if(depth != 1)//Begining by testing only to depth 4
+            if(depth != 3)//Begining by testing only to depth 3
             {
                 board.move(depth);
  //               System.out.println(board);
@@ -79,7 +79,7 @@ public class AlphaBetaSearch {
         byte hold = 99;//holds the current min
         while(!board.done)
         {
-            if(depth != 1)//Begining by testing only to depth 4
+            if(depth != 3)//Begining by testing only to depth 3
             {
                 board.move(depth);
   //              System.out.println(board);

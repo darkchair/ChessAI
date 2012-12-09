@@ -4,13 +4,12 @@
  */
 package itschess;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
+import java.util.Timer;
 
 /**
  *
@@ -21,6 +20,8 @@ public class ItsChess
     static InputStreamReader reader = new InputStreamReader (System.in);
     // Wrap the reader with a buffered reader.
     static BufferedReader buf_in = new BufferedReader (reader);
+    
+    static String otherMove = "";//where the timer puts its results
 	/**
 	 * @param args
 	 */
@@ -40,44 +41,38 @@ public class ItsChess
         
     }
     
-    public static void gameLoop() throws MalformedURLException, IOException
+    public static void gameLoop() throws MalformedURLException, IOException 
     {
         String move = "";
-        String otherMove = "";
-        AlphaBetaSearch.board.colorWhite = true;
-        String gameID = "86";
-        String head = "http://bencarle.com/chess/poll/" + gameID + "/1/32c68cae";
-        String head2 = "http://bencarle.com/chess/poll/" + gameID + "/2/1a77594c";
-        String test;
+        Timer timer = new Timer();
+        timer.schedule(new FetchOtherMove(), new Date(), 6000*5);
+       // AlphaBetaSearch.board.colorWhite = true;
         
-        URL url = new URL(head + "/Pb2b4");
-        URLConnection connectio = url.openConnection();
-        connectio.setDoInput(true); connectio.setDoOutput(true);
-        
-        url = new URL(head);
-        URLConnection connection = url.openConnection();
-        connection.setDoInput(true); connection.setDoOutput(true);
-        
-        url = new URL(head2);
-        URLConnection connection2 = url.openConnection();
-        connection2.setDoInput(true); connection2.setDoOutput(true);
-        
-        OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-        //buf_in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        
-        OutputStreamWriter out2 = new OutputStreamWriter(connection2.getOutputStream());
-        BufferedReader buf_in2 = new BufferedReader(new InputStreamReader(connection2.getInputStream()));
-        
-       
-        //out.write()
-        
-//        while((test = buf_in2.readLine()) != null)
-//        {
-//            System.out.println(test);
-//        }
-        
-//        while(!AlphaBetaSearch.board.gameOver)
-//        {
+        while(!AlphaBetaSearch.board.gameOver)
+        {
+            if(otherMove.compareTo("") != 0)//If they moved
+            {
+                //Move their piece
+                AlphaBetaSearch.board.makeOtherPlayerMove(otherMove);
+                
+                //Search for our move
+                if(turns > 2)
+                    move = AlphaBetaSearch.alphaBetaSearch();
+                else
+                    AlphaBetaSearch.board.fetchMove();
+                
+                //Send our move
+                URL url = new URL("http://www.bencarle.com/chess/move/85/2/1a77594c/Pe7e5/");
+                URLConnection connection1 = url.openConnection();
+                connection1.setDoOutput(true);
+                OutputStream tempOut = connection1.getOutputStream();
+                OutputStreamWriter out1 = new OutputStreamWriter(tempOut, "UTF-8");
+
+                out1.close();
+                tempOut.close();
+                otherMove = "";
+            }
+            
 //            if(AlphaBetaSearch.board.colorWhite == true)
 //            {
 //                if(turns > 2)
@@ -104,9 +99,9 @@ public class ItsChess
 //            }
 //            else
 //            {
-//
+//            	otherMove = fetchOtherMove();
 //            }
 //            turns ++;
-//        }
+        }
     }
 }
