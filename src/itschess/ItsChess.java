@@ -45,29 +45,36 @@ public class ItsChess
         String move = "";
         String otherMove = "";
         AlphaBetaSearch.board.colorWhite = true;
-        String gameID = "84";
+        String gameID = "86";
         String head = "http://bencarle.com/chess/poll/" + gameID + "/1/32c68cae";
         String head2 = "http://bencarle.com/chess/poll/" + gameID + "/2/1a77594c";
         String test;
         
-        URL url = new URL(head);
+        URL url = new URL(head + "/Pb2b4");
+        URLConnection connectio = url.openConnection();
+        connectio.setDoInput(true); connectio.setDoOutput(true);
+        
+        url = new URL(head);
         URLConnection connection = url.openConnection();
         connection.setDoInput(true); connection.setDoOutput(true);
         
-        url = new URL(head);
+        url = new URL(head2);
         URLConnection connection2 = url.openConnection();
         connection2.setDoInput(true); connection2.setDoOutput(true);
         
         OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-        buf_in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        //buf_in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         
-        OutputStreamWriter out2 = new OutputStreamWriter(connection.getOutputStream());
-        BufferedReader buf_in2 = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        OutputStreamWriter out2 = new OutputStreamWriter(connection2.getOutputStream());
+        BufferedReader buf_in2 = new BufferedReader(new InputStreamReader(connection2.getInputStream()));
         
-        while((test = buf_in.readLine()) != null)
-        {
-            System.out.println(test);
-        }
+       
+        //out.write()
+        
+//        while((test = buf_in2.readLine()) != null)
+//        {
+//            System.out.println(test);
+//        }
         
 //        while(!AlphaBetaSearch.board.gameOver)
 //        {
