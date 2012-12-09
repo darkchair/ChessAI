@@ -12,13 +12,13 @@ public class AlphaBetaSearch {
 
     public static byte depth = 0;
     static byte[][] possibleMoves;
-    static Board board;
+    static Board board = new Board();
     public static String[] bestMoves = new String[5];
      
     public static String alphaBetaSearch()
     {
         Byte a = -100; Byte b = 100;//should these be ints or Integers?
-        board = new Board();
+        //board = new Board();
         int v = maxValue(a, b);
         //v shouldnt be 100
         System.out.println(board);
