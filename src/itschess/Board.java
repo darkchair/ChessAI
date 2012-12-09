@@ -245,41 +245,50 @@ public class Board {
     
     public void undo(int d)
     {
-            depth = d;
-            if(chessMoves[depth] != null)
-            {
-                String oldX = String.valueOf(chessMoves[depth].charAt(2));
-                String oldY = String.valueOf(chessMoves[depth].charAt(1));
-                String currX = String.valueOf(chessMoves[depth].charAt(4));
-                String currY = String.valueOf(chessMoves[depth].charAt(3));
-                String piece = String.valueOf(chessMoves[depth].charAt(0));
-                movePiece((byte)Integer.parseInt(currY),(byte)Integer.parseInt(currX),
-                        (byte)Integer.parseInt(oldY),(byte)Integer.parseInt(oldX));
-                String tempStr = ""; 
-                tempStr += piece;
-                tempStr += oldY; tempStr += oldX; tempStr += currY; tempStr += currX;
-                if(tempStr.compareTo("60000") > 0)
-                {
-                    System.out.println();
-                }
-                chessMoves[depth] = tempStr;
-            }
+        depth = d;
+        if(chessMoves[depth] != null)
+        {
+            String oldX = String.valueOf(chessMoves[depth].charAt(2));
+            String oldY = String.valueOf(chessMoves[depth].charAt(1));
+            String currX = String.valueOf(chessMoves[depth].charAt(4));
+            String currY = String.valueOf(chessMoves[depth].charAt(3));
+            String piece = String.valueOf(chessMoves[depth].charAt(0));
+            char pc = chessMoves[depth].charAt(5);
+            byte pieceCaptured;
+            if(pc == '-')
+                pieceCaptured = Byte.parseByte(Character.toString(chessMoves[depth].charAt(5)) + chessMoves[depth].charAt(6));
+            else
+                pieceCaptured = Byte.parseByte(Character.toString(chessMoves[depth].charAt(5)));
 
-            if(depth == 2)
+            movePiece((byte)Integer.parseInt(currY),(byte)Integer.parseInt(currX),
+                    (byte)Integer.parseInt(oldY),(byte)Integer.parseInt(oldX));//not supposed to use movePiece()?
+            board[Integer.parseInt(currY)][Integer.parseInt(currX)] = pieceCaptured;
+
+            String tempStr = "";
+            tempStr += piece;
+            tempStr += oldY; tempStr += oldX; tempStr += currY; tempStr += currX;
+            if(tempStr.compareTo("60000") > 0)
             {
-                fourthX = 0;
-                fourthY = 0;
+                //System.out.println();
             }
-            else if(depth == 1)
-            {
-                thirdX = 0;
-                thirdY = 0;
-            }
-            else if(depth == 0)
-            {
-                secondX = 0;
-                secondY = 0;
-            }
+            //chessMoves[depth] = tempStr;
+        }
+
+        if(depth == 2)
+        {
+            fourthX = 0;
+            fourthY = 0;
+        }
+        else if(depth == 1)
+        {
+            thirdX = 0;
+            thirdY = 0;
+        }
+        else if(depth == 0)
+        {
+            secondX = 0;
+            secondY = 0;
+        }
     }
 
     public void gatherMoves(byte y, byte x)
@@ -428,11 +437,12 @@ public class Board {
     {
         String retVal = "";
         retVal += Math.abs(board[y][x]);
+        String pieceCaptured = Byte.toString(board[y1][x1]);
         board[y1][x1] = board[y][x];
-        retVal += "" + y + "" + x + "" + y1 + "" + x1;
+        retVal += "" + y + "" + x + "" + y1 + "" + x1 + "" + pieceCaptured;
         if(retVal.compareTo("60000") > 0)
         {
-            System.out.println();
+            //System.out.println();
         }
         chessMoves[depth] =  retVal;
         board[y][x] = 0;
