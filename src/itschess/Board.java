@@ -50,59 +50,57 @@ public class Board {
 
     public Board ()
     {
-//        byte[] holder = {-3,-5,-4,-2,-1,-4,-5,-3};
-//        board[0] = holder; 
-//        for(int i = 0; i < 8; i ++)
-//        {
-//                board[1][i] = -6;
-//
-//        }
-//        for(int i = 2; i < 6; i ++)
-//        {
-//                for(int j = 0; j < 8; j ++)
-//                {
-//                        board[i][j] = 0;
-//                }
-//        }
-//        for(int i = 0; i < 8; i ++)
-//        {
-//                board[6][i] = 6;
-//
-//        }
-//        board[7][0] = 3;
-//        board[7][1] = 5;
-//        board[7][2] = 4;
-//        board[7][3] = 2;
-//        board[7][4] = 1;
-//        board[7][5] = 4;
-//        board[7][6] = 5;
-//        board[7][7] = 3;
-//
-//        for(byte i = 0; i < 8; i ++)
-//        {
-//                for(byte j = 0; j <8; j++)
-//                {
-//                        attackboard[i][j] = 0;
-//                }
-//        }
+        byte[] holder = {-3,-5,-4,-2,-1,-4,-5,-3};
+        board[0] = holder; 
+        for(int i = 0; i < 8; i ++)
+        {
+            board[1][i] = -6;
+        }
+        for(int i = 2; i < 6; i ++)
+        {
+            for(int j = 0; j < 8; j ++)
+            {
+                    board[i][j] = 0;
+            }
+        }
+        for(int i = 0; i < 8; i ++)
+        {
+            board[6][i] = 6;
+        }
+        board[7][0] = 3;
+        board[7][1] = 5;
+        board[7][2] = 4;
+        board[7][3] = 2;
+        board[7][4] = 1;
+        board[7][5] = 4;
+        board[7][6] = 5;
+        board[7][7] = 3;
+
+        for(byte i = 0; i < 8; i ++)
+        {
+            for(byte j = 0; j <8; j++)
+            {
+                    attackboard[i][j] = 0;
+            }
+        }
         
-        //Isn't optimal in this test case, checkmate is N 31 to 12
-        byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};
-        System.arraycopy(hold1, 0, board[0], 0, 8);
-        byte[] hold2 = {-6,-6,0,0,-6,-6,-6,-6};
-        System.arraycopy(hold2, 0, board[1], 0, 8);
-        byte[] hold3 = {0,0,0,0,0,-5,0,0};
-        System.arraycopy(hold3, 0, board[2], 0, 8);
-        byte[] hold4 = {0,5,0,0,5,0,0,0};
-        System.arraycopy(hold4, 0, board[3], 0, 8);
-        byte[] hold5 = {0,0,4,0,0,0,0,0};
-        System.arraycopy(hold5, 0, board[4], 0, 8);
-        byte[] hold6 = {0,0,0,0,0,0,0,0};
-        System.arraycopy(hold6, 0, board[5], 0, 8);
-        byte[] hold7 = {6,6,0,0,0,6,6,6};
-        System.arraycopy(hold7, 0, board[6], 0, 8);
-        byte[] hold8 = {3,0,4,0,1,0,0,3};
-        System.arraycopy(hold8, 0, board[7], 0, 8);
+//        //Isn't optimal in this test case, checkmate is N 31 to 12
+//        byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};
+//        System.arraycopy(hold1, 0, board[0], 0, 8);
+//        byte[] hold2 = {-6,-6,0,0,-6,-6,-6,-6};
+//        System.arraycopy(hold2, 0, board[1], 0, 8);
+//        byte[] hold3 = {0,0,0,0,0,-5,0,0};
+//        System.arraycopy(hold3, 0, board[2], 0, 8);
+//        byte[] hold4 = {0,5,0,0,5,0,0,0};
+//        System.arraycopy(hold4, 0, board[3], 0, 8);
+//        byte[] hold5 = {0,0,4,0,0,0,0,0};
+//        System.arraycopy(hold5, 0, board[4], 0, 8);
+//        byte[] hold6 = {0,0,0,0,0,0,0,0};
+//        System.arraycopy(hold6, 0, board[5], 0, 8);
+//        byte[] hold7 = {6,6,0,0,0,6,6,6};
+//        System.arraycopy(hold7, 0, board[6], 0, 8);
+//        byte[] hold8 = {3,0,4,0,1,0,0,3};
+//        System.arraycopy(hold8, 0, board[7], 0, 8);
         
     }
     
