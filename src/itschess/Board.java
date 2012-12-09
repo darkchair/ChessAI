@@ -88,7 +88,7 @@ public class Board {
         
         //Doesn't work in this test case, checkmate is N 31 to 12
         //Knight moves in opposite direction
-        byte[] hold1 = {-3,0,-4,-2,-1,-4,0,-3};
+        byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};
         System.arraycopy(hold1, 0, board[0], 0, 8);
         byte[] hold2 = {-6,-6,0,0,-6,-6,-6,-6};
         System.arraycopy(hold2, 0, board[1], 0, 8);
@@ -383,41 +383,41 @@ public class Board {
 
         for(int i = 0; i < 8; i ++)
         {
-                for(int j = 0; j < 8; j++)
+            for(int j = 0; j < 8; j++)
+            {
+                if(board[i][j] == 1)
+                    k ++;
+                else if(board[i][j] == -1)
+                    kb ++;
+                else if(board[i][j] == 2)
+                    q ++;
+                else if(board[i][j] == -2)
+                    qb ++;
+                else if(board[i][j] == 3)
+                    r ++;
+                else if(board[i][j] == -3)
+                    rb ++;
+                else if(board[i][j] == 4)
+                    b ++;
+                else if(board[i][j] == -4)
+                    bb ++;
+                else if(board[i][j] == 5)
+                    n ++;
+                else if(board[i][j] == -5)
+                    nb ++;
+                else if(board[i][j] == 6)
                 {
-                        if(board[i][j] == 1)
-                                k ++;
-                        else if(board[i][j] == -1)
-                                kb ++;
-                        else if(board[i][j] == 2)
-                                q ++;
-                        else if(board[i][j] == -2)
-                                qb ++;
-                        else if(board[i][j] == 3)
-                                r ++;
-                        else if(board[i][j] == -3)
-                                rb ++;
-                        else if(board[i][j] == 4)
-                                b ++;
-                        else if(board[i][j] == -4)
-                                bb ++;
-                        else if(board[i][j] == 5)
-                                n ++;
-                        else if(board[i][j] == -5)
-                                nb ++;
-                        else if(board[i][j] == 6)
-                        {
-                                p ++;
-                                if (i > 0 && board[i-1][j] == 6)
-                                        d ++;
-                        }
-                        else if(board[i][j] == -6)
-                        {
-                                pb ++;
-                                if (i < 6 && board[i+1][j] == -6)
-                                        db ++;
-                        }
-                }	
+                    p ++;
+                    if (i > 0 && board[i-1][j] == 6)
+                            d ++;
+                }
+                else if(board[i][j] == -6)
+                {
+                    pb ++;
+                    if (i < 6 && board[i+1][j] == -6)
+                            db ++;
+                }
+            }	
         }
         double evalNum = 200*(k - kb) + 9*(q-qb) + 5*(r-rb) + 3*((b-bb) + (n-nb)) + (p-pb) - .5*(d-db);
 
@@ -426,16 +426,16 @@ public class Board {
 
     public void movePiece(byte y, byte x, byte y1, byte x1)
     {
-            String retVal = "";
-            retVal += Math.abs(board[y][x]);
-            board[y1][x1] = board[y][x];
-            retVal += "" + y + "" + x + "" + y1 + "" + x1;
-            if(retVal.compareTo("60000") > 0)
-            {
-                System.out.println();
-            }
-            chessMoves[depth] =  retVal;
-            board[y][x] = 0;
+        String retVal = "";
+        retVal += Math.abs(board[y][x]);
+        board[y1][x1] = board[y][x];
+        retVal += "" + y + "" + x + "" + y1 + "" + x1;
+        if(retVal.compareTo("60000") > 0)
+        {
+            System.out.println();
+        }
+        chessMoves[depth] =  retVal;
+        board[y][x] = 0;
     }
 
     public byte[][] possibleMovesPB(byte y, byte x)
@@ -443,44 +443,44 @@ public class Board {
         byte[][] retVal = new byte[4][2];
         if(y<7 && board[y+1][(byte)(x)] == 0)
         {
-                retVal[0][0] = (byte) (y+1);
-                retVal[0][1] = x;
+            retVal[0][0] = (byte) (y+1);
+            retVal[0][1] = x;
         }
         else
         {
-                retVal[0][0] = (byte) 100;
-                retVal[0][1] = (byte) 100;
+            retVal[0][0] = (byte) 100;
+            retVal[0][1] = (byte) 100;
         }
         if(board[(byte)(y+2)][x] == 0 && board[y+1][(byte) (x)] == 0 && y == 1)
         {
-                retVal[1][0] = (byte) (y+2);
-                retVal[1][1] = x;
+            retVal[1][0] = (byte) (y+2);
+            retVal[1][1] = x;
         }
         else
         {
-                retVal[0][0] = (byte) 100;
-                retVal[0][1] = (byte) 100;
+            retVal[0][0] = (byte) 100;
+            retVal[0][1] = (byte) 100;
         }
         if(x<7 && y<7 && board[(byte)(y+1)][(byte)(x+1)] > 0)
         {
 
-                retVal[2][0] = (byte) (y+1);
-                retVal[2][1] = (byte) (x+1);
+            retVal[2][0] = (byte) (y+1);
+            retVal[2][1] = (byte) (x+1);
         }
         else
         {
-                retVal[2][0] = (byte) 100;
-                retVal[2][1] = (byte) 100;
+            retVal[2][0] = (byte) 100;
+            retVal[2][1] = (byte) 100;
         }
         if(x>0 && y<7 && board[(byte)(y+1)][(byte)(x-1)] > 0 )
         {
-                retVal[3][0] = (byte) (y+1);
-                retVal[3][1] = (byte) (x-1);
+            retVal[3][0] = (byte) (y+1);
+            retVal[3][1] = (byte) (x-1);
         }
         else
         {
-                retVal[3][0] = (byte)100;
-                retVal[3][1] = (byte)100;
+            retVal[3][0] = (byte)100;
+            retVal[3][1] = (byte)100;
         }
         return retVal;
     }
@@ -653,7 +653,7 @@ public class Board {
         byte[][] retval = new byte[14][2];
         byte sizecount = 0;
 
-        for(byte m=x, i=y; m<8; m++)
+        for(byte m=(byte)(x+1), i=y; m<8; m++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -676,7 +676,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m>0; m--)
+        for(byte m=(byte)(x-1), i=y; m>0; m--)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -699,7 +699,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; i<8; i++)
+        for(byte m=x, i=(byte)(y+1); i<8; i++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -722,7 +722,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; i>0; i--)
+        for(byte m=x, i=(byte)(y-1); i>0; i--)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -745,6 +745,7 @@ public class Board {
                 break;
             }
         }
+        
         for(int i=sizecount; i<14; i++)
         {
             retval[i][0] = (byte)(100);
@@ -760,7 +761,7 @@ public class Board {
         //System.out.println("X: " + x + "Y: " + y);
         byte sizecount = 0;
 
-        for(byte m=x, i=y; m<8 && i<8; m++,i++)
+        for(byte m=(byte)(x+1), i=(byte)(y+1); m<8 && i<8; m++,i++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -783,7 +784,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m>0 && i<8; m--, i++)
+        for(byte m=(byte)(x-1), i=(byte)(y+1); m>0 && i<8; m--, i++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -806,7 +807,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m<8 && i>0; m++, i--)
+        for(byte m=(byte)(x+1), i=(byte)(y-1); m<8 && i>0; m++, i--)
         {
             if(board[(i)][(m)] == 0 && board[i][m] < 0)
             {
@@ -829,7 +830,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m>0 && i>0; m--, i--)
+        for(byte m=(byte)(x-1), i=(byte)(y-1); m>0 && i>0; m--, i--)
         {
             if(board[(i)][(m)] == 0 && board[i][m] < 0)
             {
@@ -867,7 +868,7 @@ public class Board {
         byte[][] retval = new byte[27][2];
         byte sizecount = 0;
 
-        for(byte m=x, i=y; m<8; m++)
+        for(byte m=(byte)(x+1), i=y; m<8; m++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -890,7 +891,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m>0; m--)
+        for(byte m=(byte)(x-1), i=y; m>0; m--)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -913,7 +914,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; i<8; i++)
+        for(byte m=x, i=(byte)(y+1); i<8; i++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -936,7 +937,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; i>0; i--)
+        for(byte m=x, i=(byte)(y-1); i>0; i--)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -961,7 +962,7 @@ public class Board {
         }
 
 
-        for(byte m=x, i=y; m<8 && i<8; m++,i++)
+        for(byte m=(byte)(x+1), i=(byte)(y+1); m<8 && i<8; m++,i++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -984,7 +985,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m>0 && i<8; m--, i++)
+        for(byte m=(byte)(x-1), i=(byte)(y+1); m>0 && i<8; m--, i++)
         {
             if(board[(i)][(m)] == 0)
             {
@@ -1007,7 +1008,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m<8 && i>0; m++, i--)
+        for(byte m=(byte)(x+1), i=(byte)(y-1); m<8 && i>0; m++, i--)
         {
             if(board[(i)][(m)] == 0 && board[i][m] < 0)
             {
@@ -1030,7 +1031,7 @@ public class Board {
                 break;
             }
         }
-        for(byte m=x, i=y; m>0 && i>0; m--, i--)
+        for(byte m=(byte)(x-1), i=(byte)(y-1); m>0 && i>0; m--, i--)
         {
             if(board[(i)][(m)] == 0 && board[i][m] < 0)
             {
@@ -1078,14 +1079,14 @@ public class Board {
                     retVal += "\n";
             }
             retVal += "\n";
-            for(int i =0; i < 8; i ++)
-            {
-                    for(int j = 0; j < 8; j++)
-                    {
-                            retVal += attackboard[i][j] + "\t";
-                    }
-                    retVal += "\n";
-            }
+//            for(int i =0; i < 8; i ++)
+//            {
+//                    for(int j = 0; j < 8; j++)
+//                    {
+//                            retVal += attackboard[i][j] + "\t";
+//                    }
+//                    retVal += "\n";
+//            }
             return retVal;
     }
 }

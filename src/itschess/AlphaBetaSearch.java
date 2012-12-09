@@ -20,7 +20,7 @@ public class AlphaBetaSearch {
         Byte a = -100; Byte b = 100;//should these be ints or Integers?
         board = new Board();
         int v = maxValue(a, b);
-        System.out.println();
+        System.out.println(board);
     }
     
     public static byte maxValue(Byte a, Byte b)
@@ -32,6 +32,7 @@ public class AlphaBetaSearch {
             if(depth != 4)//Begining by testing only to depth 4
             {
                 board.move(depth);
+                //System.out.println(board);
                 depth++;
                 hold = minValue(a, b);
             }
@@ -80,6 +81,7 @@ public class AlphaBetaSearch {
             if(depth != 4)//Begining by testing only to depth 4
             {
                 board.move(depth);
+                //System.out.println(board);
                 depth++;
                 hold = maxValue(a, b);
             }
