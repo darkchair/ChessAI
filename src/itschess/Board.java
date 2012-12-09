@@ -86,8 +86,7 @@ public class Board {
 //                }
 //        }
         
-        //Doesn't work in this test case, checkmate is N 31 to 12
-        //Knight moves in opposite direction
+        //Isn't optimal in this test case, checkmate is N 31 to 12
         byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};
         System.arraycopy(hold1, 0, board[0], 0, 8);
         byte[] hold2 = {-6,-6,0,0,-6,-6,-6,-6};
@@ -266,12 +265,12 @@ public class Board {
 
             String tempStr = "";
             tempStr += piece;
-            tempStr += oldY; tempStr += oldX; tempStr += currY; tempStr += currX;
+            tempStr += oldY; tempStr += oldX; tempStr += currY; tempStr += currX; tempStr += pieceCaptured;
             if(tempStr.compareTo("60000") > 0)
             {
                 //System.out.println();
             }
-            //chessMoves[depth] = tempStr;
+            chessMoves[depth] = tempStr;
         }
 
         if(depth == 2)
@@ -1098,5 +1097,136 @@ public class Board {
 //                    retVal += "\n";
 //            }
             return retVal;
+    }
+    
+    public String fetchMove()
+    {
+    	if(ItsChess.turns == 0)
+    	{
+            movePiece((byte)6,(byte)4,(byte)4,(byte)4);
+            return "PE2E4";
+    	}
+    	if(ItsChess.turns == 1)
+    	{
+            movePiece((byte)7,(byte)6,(byte)5,(byte)5);
+            return "NG1F3";
+    	}
+    	if(ItsChess.turns == 2)
+            return "NG1F3";
+    	return "";
+    	
+    }
+    
+    public void castle(int turn)
+    {
+    	
+    }
+    
+    public void makeOtherPlayerMove(String lastMove)
+    {
+    	//byte piece =  translatePiece(lastMove.charAt(0));
+    	byte oldCol = translateColumn(lastMove.charAt(1));
+    	byte oldRow = (byte) Integer.parseInt(lastMove.substring(2,3));
+    	byte newCol = translateColumn(lastMove.charAt(3));
+    	byte newRow = (byte) Integer.parseInt(lastMove.substring(4,5));
+    	
+    	movePiece(oldRow, oldCol, newRow, newCol);
+    }
+    
+    private static String columnTranslate(int column)
+    {
+        switch (column)
+        {
+            case 0:
+                return "A";
+            case 1:
+                return "B";
+            case 2:
+                return "C";
+            case 3:
+                return "D";
+            case 4:
+                return "E";
+            case 5:
+                return "F";
+            case 6:
+                return "G";
+            case 7:
+                return "H";
+            default:
+                return "Unknown";
+        }
+    }
+    private static byte translateColumn(char column)
+    {
+        switch (column)
+        {
+            case 'A':
+                return 0;
+            case 'B':
+                return 1;
+            case 'C':
+                return 2;
+            case 'D':
+                return 3;
+            case 'E':
+                return 4;
+            case 'F':
+                return 5;
+            case 'G':
+                return 6;
+            case 'H':
+                return 7;
+            default:
+                return 0;
+        }
+    }
+    private static String pieceTranslate(byte piece)
+    {
+        switch (piece)
+        {
+            case 4:
+                return "B";
+                
+            case 1:
+                return "K";
+
+            case 5:
+                return "N";
+
+            case 2:
+                return "Q";
+
+            case 3:
+                return "R";
+            case 6:
+                return "P";
+            default:
+                return "";
+        }
+    }
+    private static byte translatePiece(char piece)
+    {
+        switch (piece)
+        {
+            case 'B':
+                return 4;
+                
+            case 'K':
+                return 1;
+
+            case 'N':
+                return 5;
+
+            case 'Q':
+                return 2;
+
+            case 'R':
+                return 3;
+            case 'P':
+                return 6;
+            default:
+                return 0;
+        }
     }
 }

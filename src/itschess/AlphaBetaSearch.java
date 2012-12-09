@@ -15,12 +15,14 @@ public class AlphaBetaSearch {
     static Board board;
     public static String[] bestMoves = new String[5];
      
-    public static void alphaBetaSearch()
+    public static String alphaBetaSearch()
     {
         Byte a = -100; Byte b = 100;//should these be ints or Integers?
         board = new Board();
         int v = maxValue(a, b);
+        //v shouldnt be 100
         System.out.println(board);
+        return AlphaBetaSearch.bestMoves[0];
     }
     
     public static byte maxValue(Byte a, Byte b)
@@ -29,10 +31,10 @@ public class AlphaBetaSearch {
         byte hold = -99;//holds the current max
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 4
+            if(depth != 1)//Begining by testing only to depth 4
             {
                 board.move(depth);
-                //System.out.println(board);
+ //               System.out.println(board);
                 depth++;
                 hold = minValue(a, b);
             }
@@ -52,8 +54,6 @@ public class AlphaBetaSearch {
             if(tempA >= b)      
             {//If this branch is bad skip it
                 //board.undo(depth); //dont know if this should be removed
-                if(depth == 0)
-                    System.out.println();
                 depth--;
                 return tempA;
             }
@@ -61,6 +61,7 @@ public class AlphaBetaSearch {
                 a = tempA;
             
             board.undo(depth);
+//            System.out.println(board);
             if(board.done)
                 System.out.println();//Never gets hit dont know why
         }
@@ -78,10 +79,10 @@ public class AlphaBetaSearch {
         byte hold = 99;//holds the current min
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 4
+            if(depth != 1)//Begining by testing only to depth 4
             {
                 board.move(depth);
-                //System.out.println(board);
+  //              System.out.println(board);
                 depth++;
                 hold = maxValue(a, b);
             }
@@ -99,7 +100,7 @@ public class AlphaBetaSearch {
                 tempB = hold;
             }
             if(tempB <= a)      
-            {//If this brach is bad skip it
+            {//If this branch is bad skip it
                 //board.undo(depth); //dont know if this should be removed
                 depth--;
                 return tempB;
@@ -109,6 +110,7 @@ public class AlphaBetaSearch {
             
             
             board.undo(depth);
+//            System.out.println(board);
             if(board.done)
                 System.out.println();//Never gets hit dont know why
         }
