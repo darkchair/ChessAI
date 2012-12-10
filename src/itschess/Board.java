@@ -14,7 +14,7 @@ public class Board {
     public byte attackboard[][] = new byte[8][8];
 
     public boolean whiteMove = false;
-    public boolean colorWhite = true;
+    public boolean colorWhite = false;
     public boolean ourMove = false;
     
     public boolean ourCheckMate = false;
@@ -245,11 +245,11 @@ public class Board {
         depth = d;
         if(chessMoves[depth] != null)
         {
-            String oldX = String.valueOf(chessMoves[depth].charAt(2));
-            String oldY = String.valueOf(chessMoves[depth].charAt(1));
-            String currX = String.valueOf(chessMoves[depth].charAt(4));
-            String currY = String.valueOf(chessMoves[depth].charAt(3));
-            String piece = String.valueOf(chessMoves[depth].charAt(0));
+            byte oldX = Byte.parseByte(Character.toString(chessMoves[depth].charAt(2)));
+            byte oldY = Byte.parseByte(Character.toString(chessMoves[depth].charAt(1)));
+            byte currX = Byte.parseByte(Character.toString(chessMoves[depth].charAt(4)));
+            byte currY = Byte.parseByte(Character.toString(chessMoves[depth].charAt(3)));
+            byte piece = Byte.parseByte(Character.toString(chessMoves[depth].charAt(0)));
             char pc = chessMoves[depth].charAt(5);
             byte pieceCaptured;
             if(pc == '-')
@@ -257,18 +257,26 @@ public class Board {
             else
                 pieceCaptured = Byte.parseByte(Character.toString(chessMoves[depth].charAt(5)));
 
-            movePiece((byte)Integer.parseInt(currY),(byte)Integer.parseInt(currX),
-                    (byte)Integer.parseInt(oldY),(byte)Integer.parseInt(oldX));//not supposed to use movePiece()?
-            board[Integer.parseInt(currY)][Integer.parseInt(currX)] = pieceCaptured;
+            movePiece(currY,currX,oldY,oldX);//not supposed to use movePiece()?
+            board[currY][currX] = pieceCaptured;
 
             String tempStr = "";
-            tempStr += piece;
-            tempStr += oldY; tempStr += oldX; tempStr += currY; tempStr += currX; tempStr += pieceCaptured;
+            if(colorWhite)
+            {
+            	tempStr += pieceTranslate(piece);
+            	tempStr += columnTranslate(oldX); tempStr += translateRow(oldY); tempStr += columnTranslate(currX); tempStr += translateRow(currY); //tempStr += pieceCaptured;
+            }
+            else
+            {
+            	tempStr += pieceTranslate(piece);
+            	tempStr += columnTranslate(oldX); tempStr += translateRowBlack(oldY); tempStr += columnTranslate(currX); tempStr += translateRowBlack(currY); //tempStr += pieceCaptured;
+            }
             if(tempStr.compareTo("60000") > 0)
             {
                 //System.out.println();
             }
             chessMoves[depth] = tempStr;
+            System.out.println(tempStr);
         }
 
         if(depth == 2)
@@ -1120,7 +1128,7 @@ public class Board {
     	
     }
     
-    public void makeOtherPlayerMove(String lastMove)
+     public void makeOtherPlayerMove(String lastMove)
     {
     	//byte piece =  translatePiece(lastMove.charAt(0));
     	byte oldCol = translateColumn(lastMove.charAt(1));
@@ -1128,7 +1136,31 @@ public class Board {
     	byte newCol = translateColumn(lastMove.charAt(3));
     	byte newRow = (byte) Integer.parseInt(lastMove.substring(4,5));
     	
-    	movePiece(oldRow, oldCol, newRow, newCol);
+    	if(colorWhite)
+    	{
+    		movePiece(rowTranslateBlack(oldRow), oldCol,rowTranslateBlack(newRow), newCol);
+    	}
+    	else
+    	{
+    		movePiece(rowTranslateWhite(oldRow), oldCol,rowTranslateWhite(newRow), newCol);
+    	}
+    }
+    
+    public void makeOurMove(String ourMove)
+    {
+    	byte oldCol = translateColumn(ourMove.charAt(1));
+    	byte oldRow = (byte) Integer.parseInt(ourMove.substring(2,3));
+    	byte newCol = translateColumn(ourMove.charAt(3));
+    	byte newRow = (byte) Integer.parseInt(ourMove.substring(4,5));
+    	
+    	if(!colorWhite)
+    	{
+    		movePiece(flipRowB(oldRow), oldCol,flipRowB(newRow), newCol);
+    	}
+    	else
+    	{
+    		movePiece(flipRow(oldRow), oldCol,flipRow(newRow), newCol);
+    	}
     }
     
     private static String columnTranslate(int column)
@@ -1136,44 +1168,44 @@ public class Board {
         switch (column)
         {
             case 0:
-                return "A";
+                return "a";
             case 1:
-                return "B";
+                return "b";
             case 2:
-                return "C";
+                return "c";
             case 3:
-                return "D";
+                return "d";
             case 4:
-                return "E";
+                return "e";
             case 5:
-                return "F";
+                return "f";
             case 6:
-                return "G";
+                return "g";
             case 7:
-                return "H";
+                return "h";
             default:
                 return "Unknown";
         }
     }
-    private static byte translateColumn(char column)
+    public static byte translateColumn(char column)
     {
         switch (column)
         {
-            case 'A':
+            case 'a':
                 return 0;
-            case 'B':
+            case 'b':
                 return 1;
-            case 'C':
+            case 'c':
                 return 2;
-            case 'D':
+            case 'd':
                 return 3;
-            case 'E':
+            case 'e':
                 return 4;
-            case 'F':
+            case 'f':
                 return 5;
-            case 'G':
+            case 'g':
                 return 6;
-            case 'H':
+            case 'h':
                 return 7;
             default:
                 return 0;
@@ -1227,4 +1259,156 @@ public class Board {
                 return 0;
         }
     }
+    
+    private static String translateRow(byte row)
+    {
+    	switch (row)
+        {
+            case 0:
+                return "8";                
+            case 1:
+                return "7";
+            case 2:
+                return "6";
+            case 3:
+                return "5";
+            case 4:
+                return "4";
+            case 5:
+                return "3";
+            case 6:
+                return "2";
+            case 7:
+                return "1";
+            default:
+                return "";
+        }
+    	
+    }
+    
+    private static String translateRowBlack(byte row)
+    {
+    	switch (row)
+        {
+            case 0:
+                return "1";                
+            case 1:
+                return "2";
+            case 2:
+                return "3";
+            case 3:
+                return "4";
+            case 4:
+                return "5";
+            case 5:
+                return "6";
+            case 6:
+                return "7";
+            case 7:
+                return "8";
+            default:
+                return "";
+        }
+    }
+    
+    private static byte flipRow(byte row)
+    {
+    	 switch (row)
+         {
+             case 1:
+                 return 7;
+             case 2:
+                 return 6;
+             case 3:
+                 return 5;
+             case 4:
+                 return 4;
+             case 5:
+                 return 3;
+             case 6:
+                 return 2;
+             case 7:
+                 return 1;
+             case 8:
+                 return 0;
+             default:
+                 return 0;
+         }      	
+    }
+    
+    private static byte flipRowB(byte row)
+    {
+    	 switch (row)
+         {
+             case 8:
+                 return 0;
+             case 7:
+                 return 1;
+             case 6:
+                 return 2;
+             case 5:
+                 return 3;
+             case 4:
+                 return 4;
+             case 3:
+                 return 5;
+             case 2:
+                 return 6;
+             case 1:
+                 return 7;
+             default:
+                 return 0;
+         }      	
+    }
+    
+     private static byte rowTranslateWhite(byte row)
+    {
+    	switch (row)
+        {
+            case 1:
+                return 7;
+            case 2:
+                return 6;
+            case 3:
+                return 5;
+            case 4:
+                return 4;
+            case 5:
+                return 3;
+            case 6:
+                return 2;
+            case 7:
+                return 1;
+            case 8:
+                return 0;
+            default:
+                return 0;
+        }
+    }
+    
+     private static byte rowTranslateBlack(byte row)
+    {
+    	 switch (row)
+         {
+             case 8:
+                 return 7;
+             case 7:
+                 return 6;
+             case 6:
+                 return 5;
+             case 5:
+                 return 4;
+             case 4:
+                 return 3;
+             case 3:
+                 return 2;
+             case 2:
+                 return 1;
+             case 1:
+                 return 0;
+             default:
+                 return 0;
+         }    	
+    }
+    
 }

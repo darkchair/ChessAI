@@ -26,6 +26,7 @@ public class ItsChess
 	 * @param args
 	 */
     public static int turns = 0;
+    public static Timer timer = new Timer();
         
     public static void main(String[] args) {
         
@@ -44,8 +45,8 @@ public class ItsChess
     public static void gameLoop() throws MalformedURLException, IOException 
     {
         String move = "";
-        Timer timer = new Timer();
-        timer.schedule(new FetchOtherMove(), new Date(), 6000*5);
+        
+        timer.scheduleAtFixedRate(new FetchOtherMove(), new Date(), 5000);
        // AlphaBetaSearch.board.colorWhite = true;
         
         while(!AlphaBetaSearch.board.gameOver)
@@ -56,52 +57,25 @@ public class ItsChess
                 AlphaBetaSearch.board.makeOtherPlayerMove(otherMove);
                 
                 //Search for our move
-                if(turns > 2)
-                    move = AlphaBetaSearch.alphaBetaSearch();
-                else
-                    AlphaBetaSearch.board.fetchMove();
+                move = AlphaBetaSearch.alphaBetaSearch();
                 
                 //Send our move
-                URL url = new URL("http://www.bencarle.com/chess/move/85/2/1a77594c/Pe7e5/");
-                URLConnection connection1 = url.openConnection();
-                connection1.setDoOutput(true);
-                OutputStream tempOut = connection1.getOutputStream();
-                OutputStreamWriter out1 = new OutputStreamWriter(tempOut, "UTF-8");
+                URL url = new URL("http://www.bencarle.com/chess/move/101/2/1a77594c/" + move + "/");
+                URLConnection connection = url.openConnection();
+                InputStream in = connection.getInputStream();
+                BufferedReader res = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                StringBuffer sBuffer = new StringBuffer();
+                String inputLine;
+                while ((inputLine = res.readLine()) != null)
+                        sBuffer.append(inputLine);
+                res.close();
+                
+                //Make our move
+                AlphaBetaSearch.board.makeOurMove(move);
 
-                out1.close();
-                tempOut.close();
                 otherMove = "";
+                //ItsChess.timer.scheduleAtFixedRate(new FetchOtherMove(), 5000, 5000);
             }
-            
-//            if(AlphaBetaSearch.board.colorWhite == true)
-//            {
-//                if(turns > 2)
-//                    move = AlphaBetaSearch.alphaBetaSearch();
-//
-//                else
-//                {
-//                    AlphaBetaSearch.board.fetchMove();
-//                }
-//                String str = "q";
-//                try {
-//                    // Read a whole line a time. Check the string for
-//                    // the "quit" input to jump from the loop.
-//
-//                    str = buf_in.readLine ();
-//
-//                }
-//                catch  (IOException e) {
-//                    System.out.println ("IO exception = " + e );
-//                }
-//
-//                AlphaBetaSearch.board.makeOtherPlayerMove(str);
-//                System.out.println(AlphaBetaSearch.board.toString());
-//            }
-//            else
-//            {
-//            	otherMove = fetchOtherMove();
-//            }
-//            turns ++;
         }
     }
 }

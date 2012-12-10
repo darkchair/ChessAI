@@ -21,7 +21,7 @@ public class AlphaBetaSearch {
         //board = new Board();
         int v = maxValue(a, b);
         //v shouldnt be 100
-        System.out.println(board);
+        //System.out.println(board);
         return AlphaBetaSearch.bestMoves[0];
     }
     

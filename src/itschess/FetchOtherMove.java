@@ -5,6 +5,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,24 +24,22 @@ public class FetchOtherMove extends TimerTask{
     public void run()
     {
         String gameID = "85";
-        String head = "http://www.bencarle.com/chess/poll/89/2/1a77594c/";
-        String head2 = "http://www.bencarle.com/chess/poll/89/1/32c68cae/";
-        String test;
-        boolean moveRead = false;
-        String otherMove = "";
+        String head = "http://www.bencarle.com/chess/poll/101/2/1a77594c/";
+        String head2 = "http://www.bencarle.com/chess/poll/101/1/32c68cae/";
     	
         String serverText = "";
         int moveIndex;
         
         BufferedReader res = null;
+        //System.out.println();
         try{
-            URL url = new URL(head2);
+            URL url = new URL(head);
             URLConnection connection = url.openConnection();
             InputStream in = connection.getInputStream();
             res = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         }
         catch (IOException e){
-            
+            System.out.println();
         }
         StringBuffer sBuffer = new StringBuffer();
         String inputLine;
@@ -60,47 +59,11 @@ public class FetchOtherMove extends TimerTask{
         String testfas = serverText.substring(moveIndex,sBuffer.indexOf(",")).trim();
         if(testfas.equals("true"))
         {
-            moveRead = true;
-            otherMove = serverText.substring(serverText.lastIndexOf(":")+3, serverText.lastIndexOf("}")-1);
+            //moveRead = true;
+            ItsChess.otherMove = serverText.substring(serverText.lastIndexOf(":")+3, serverText.lastIndexOf("}")-1);
             
-//            
-//            
-//            URL url = null;
-//            try {
-//                url = new URL("http://www.bencarle.com/chess/move/85/2/1a77594c/" + otherMove + "/");
-//            } catch (MalformedURLException ex) {
-//                Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            URLConnection connection1 = null;
-//            try {
-//                connection1 = url.openConnection();
-//            } catch (IOException ex) {
-//                Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            connection1.setDoOutput(true);
-//            OutputStream tempOut = null;
-//            try {
-//                tempOut = connection1.getOutputStream();
-//            } catch (IOException ex) {
-//                Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            OutputStreamWriter out1 = null;
-//            try {
-//                out1 = new OutputStreamWriter(tempOut, "UTF-8");
-//            } catch (UnsupportedEncodingException ex) {
-//                Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            try {
-//                out1.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            try {
-//                tempOut.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         }
+        
     }
     
 }
