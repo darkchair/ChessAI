@@ -21,49 +21,84 @@ import java.util.logging.Logger;
  */
 public class FetchOtherMove extends TimerTask{
     
-    public void run()
-    {
+    public void run(){
+        AlphaBetaSearch.board.colorWhite = false;
         String gameID = "85";
-        String head = "http://www.bencarle.com/chess/poll/101/2/1a77594c/";
-        String head2 = "http://www.bencarle.com/chess/poll/101/1/32c68cae/";
-    	
+        String head = "http://www.bencarle.com/chess/poll/120/2/1a77594c/";
+        String head2 = "http://www.bencarle.com/chess/poll/154/2/1a77594c/";
+        String test;
+        boolean moveRead = false;
+        String otherMove = "";
+
         String serverText = "";
         int moveIndex;
-        
-        BufferedReader res = null;
-        //System.out.println();
-        try{
-            URL url = new URL(head);
-            URLConnection connection = url.openConnection();
-            InputStream in = connection.getInputStream();
-            res = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        }
-        catch (IOException e){
-            System.out.println();
-        }
-        StringBuffer sBuffer = new StringBuffer();
-        String inputLine;
         try {
-            while ((inputLine = res.readLine()) != null)
-                sBuffer.append(inputLine);
-        } catch (IOException ex) {
-            Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
+            serverText = getServerText(head2);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        try {
-            res.close();
-        } catch (IOException ex) {
-            Logger.getLogger(FetchOtherMove.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        serverText = sBuffer.toString();
         moveIndex = serverText.indexOf(":") + 1;
-        String testfas = serverText.substring(moveIndex,sBuffer.indexOf(",")).trim();
+        String testfas = serverText.substring(moveIndex,serverText.indexOf(",")).trim();
         if(testfas.equals("true"))
         {
-            //moveRead = true;
-            ItsChess.otherMove = serverText.substring(serverText.lastIndexOf(":")+3, serverText.lastIndexOf("}")-1);
-            
+                moveRead = true;
+                String move;
+                otherMove = serverText.substring(serverText.lastIndexOf(":")+3, serverText.lastIndexOf("}")-1);
+                if(!otherMove.equals(""))
+                    AlphaBetaSearch.board.makeOtherPlayerMove(otherMove);
+
+                move = AlphaBetaSearch.alphaBetaSearch();
+                System.out.println(move);
+                //	if(Chess.turns == 4)
+                //		move = AlphaBetaSearch.board.castle();
+            // else
+            //  {
+                // move = AlphaBetaSearch.board.fetchMove();
+
+                    //AlphaBetaSearch.board.makeOurMove(move);
+        //    }
+                try {
+                    sendMove(move);
+                    AlphaBetaSearch.board.makeOurMove(move);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
         }
-        
+        else
+        {
+            System.out.println("waiting");
+        }
+            //ItsChess.timer.schedule(new FetchOtherMove(), 5 * 1000);
+        ItsChess.turns++;
+    }
+
+    public void sendMove(String move) throws IOException {
+        URL url = new URL("http://www.bencarle.com/chess/move/154/2/1a77594c/" + move + "/");
+        URLConnection connection = url.openConnection();
+        InputStream in = connection.getInputStream();
+        BufferedReader res = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        StringBuffer sBuffer = new StringBuffer();
+        String inputLine;
+        while ((inputLine = res.readLine()) != null)
+                sBuffer.append(inputLine);
+        res.close();
+        }
+
+        public String getServerText(String head) throws IOException{
+        URL url = new URL(head);
+        URLConnection connection = url.openConnection();
+        InputStream in = connection.getInputStream();
+        BufferedReader res = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        StringBuffer sBuffer = new StringBuffer();
+        String inputLine;
+        while ((inputLine = res.readLine()) != null)
+                sBuffer.append(inputLine);
+        res.close();
+        String serverText1 = sBuffer.toString();
+        return serverText1;
     }
     
 }

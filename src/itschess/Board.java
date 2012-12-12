@@ -15,7 +15,7 @@ public class Board {
 
     public boolean whiteMove = false;
     public boolean colorWhite = false;
-    public boolean ourMove = false;
+    public boolean ourMove = true;
     
     public boolean ourCheckMate = false;
     public boolean otherCheckMate = false;
@@ -50,7 +50,8 @@ public class Board {
 
     public Board ()
     {
-        byte[] holder = {-3,-5,-4,-2,-1,-4,-5,-3};
+    	/*
+    	byte[] holder = {-3,-5,-4,-2,-1,-4,-5,-3};
         board[0] = holder; 
         for(int i = 0; i < 8; i ++)
         {
@@ -82,28 +83,27 @@ public class Board {
             {
                     attackboard[i][j] = 0;
             }
-        }
+        } */
         
-//        //Isn't optimal in this test case, checkmate is N 31 to 12
-//        byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};
-//        System.arraycopy(hold1, 0, board[0], 0, 8);
-//        byte[] hold2 = {-6,-6,0,0,-6,-6,-6,-6};
-//        System.arraycopy(hold2, 0, board[1], 0, 8);
-//        byte[] hold3 = {0,0,0,0,0,-5,0,0};
-//        System.arraycopy(hold3, 0, board[2], 0, 8);
-//        byte[] hold4 = {0,5,0,0,5,0,0,0};
-//        System.arraycopy(hold4, 0, board[3], 0, 8);
-//        byte[] hold5 = {0,0,4,0,0,0,0,0};
-//        System.arraycopy(hold5, 0, board[4], 0, 8);
-//        byte[] hold6 = {0,0,0,0,0,0,0,0};
-//        System.arraycopy(hold6, 0, board[5], 0, 8);
-//        byte[] hold7 = {6,6,0,0,0,6,6,6};
-//        System.arraycopy(hold7, 0, board[6], 0, 8);
-//        byte[] hold8 = {3,0,4,0,1,0,0,3};
-//        System.arraycopy(hold8, 0, board[7], 0, 8);
+        //Isn't optimal in this test case, checkmate is N 31 to 12
+        byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};
+        System.arraycopy(hold1, 0, board[0], 0, 8);
+        byte[] hold2 = {-6,-6,0,0,-6,-6,-6,-6};
+        System.arraycopy(hold2, 0, board[1], 0, 8);
+        byte[] hold3 = {0,0,0,0,0,-5,0,0};
+        System.arraycopy(hold3, 0, board[2], 0, 8);
+        byte[] hold4 = {0,5,0,0,5,0,0,0};
+        System.arraycopy(hold4, 0, board[3], 0, 8);
+        byte[] hold5 = {0,0,4,0,0,0,0,0};
+        System.arraycopy(hold5, 0, board[4], 0, 8);
+        byte[] hold6 = {0,0,0,0,0,0,0,0};
+        System.arraycopy(hold6, 0, board[5], 0, 8);
+        byte[] hold7 = {6,6,0,0,0,6,6,6};
+        System.arraycopy(hold7, 0, board[6], 0, 8);
+        byte[] hold8 = {3,0,4,0,1,0,0,3};
+        System.arraycopy(hold8, 0, board[7], 0, 8);
         
     }
-    
     
     public void move(int d)
     {
@@ -240,11 +240,29 @@ public class Board {
         }
     }
     
+    public void movePiece(byte y, byte x, byte y1, byte x1)
+    {
+        String retVal = "";
+        retVal += Math.abs(board[y][x]);
+        String pieceCaptured = Byte.toString(board[y1][x1]);
+        board[y1][x1] = board[y][x];
+        retVal += "" + y + "" + x + "" + y1 + "" + x1 + "" + pieceCaptured;
+        if(retVal.compareTo("60000") > 0)
+        {
+            //System.out.println();
+        }
+        chessMoves[depth] =  retVal;
+        board[y][x] = 0;
+    }
+    
     public void undo(int d)
     {
         depth = d;
         if(chessMoves[depth] != null)
         {
+            System.out.println(chessMoves[depth]);
+            if(chessMoves[depth].compareTo("Ph2h4") == 0);
+                System.out.println();
             byte oldX = Byte.parseByte(Character.toString(chessMoves[depth].charAt(2)));
             byte oldY = Byte.parseByte(Character.toString(chessMoves[depth].charAt(1)));
             byte currX = Byte.parseByte(Character.toString(chessMoves[depth].charAt(4)));
@@ -264,19 +282,21 @@ public class Board {
             if(colorWhite)
             {
             	tempStr += pieceTranslate(piece);
-            	tempStr += columnTranslate(oldX); tempStr += translateRow(oldY); tempStr += columnTranslate(currX); tempStr += translateRow(currY); //tempStr += pieceCaptured;
+            	tempStr += columnTranslate(oldX); tempStr += translateRow(oldY);
+                tempStr += columnTranslate(currX); tempStr += translateRow(currY); //tempStr += pieceCaptured;
             }
             else
             {
             	tempStr += pieceTranslate(piece);
-            	tempStr += columnTranslate(oldX); tempStr += translateRowBlack(oldY); tempStr += columnTranslate(currX); tempStr += translateRowBlack(currY); //tempStr += pieceCaptured;
+            	tempStr += columnTranslate(oldX); tempStr += translateRowBlack(oldY);
+                tempStr += columnTranslate(currX); tempStr += translateRowBlack(currY); //tempStr += pieceCaptured;
             }
             if(tempStr.compareTo("60000") > 0)
             {
                 //System.out.println();
             }
             chessMoves[depth] = tempStr;
-            System.out.println(tempStr);
+            //System.out.println(tempStr);
         }
 
         if(depth == 2)
@@ -300,34 +320,34 @@ public class Board {
     {
             if(board[y][x] == -6)
             {
-                    possibleMoves = possibleMovesPB(y,x);
+                possibleMoves = possibleMovesPB(y,x);
             }
             else if(board[y][x] == 6)
             {
-                    possibleMoves = possibleMovesP(y,x);
+                possibleMoves = possibleMovesP(y,x);
             }
             else if (Math.abs(board[y][x]) == (byte) 5)
             {
-                    possibleMoves  = possibleMovesN(y,x);
+                possibleMoves  = possibleMovesN(y,x);
             }
             else if (Math.abs(board[y][x]) == (byte) 4)
             {
-                    possibleMoves  = possibleMovesBishop(y,x);
+                possibleMoves  = possibleMovesBishop(y,x);
             }
             else if (Math.abs(board[y][x]) == (byte) 3)
             {
-                    possibleMoves  = possibleMovesRook(y,x);
+                possibleMoves  = possibleMovesRook(y,x);
             }
             else if (Math.abs(board[y][x]) == (byte) 2)
             {
-                    possibleMoves  = possibleMovesQ(y,x);
+                possibleMoves  = possibleMovesQ(y,x);
             }
             else if (Math.abs(board[y][x]) == (byte) 1)
             {
-                    possibleMoves  = possibleMovesBishop(y,x);
+                possibleMoves  = possibleMovesBishop(y,x);
             }
             else 
-                    possibleMoves = null;
+                possibleMoves = null;
 
     }
 
@@ -340,39 +360,39 @@ public class Board {
             {
                 if(board[i][j] == (byte) -6)
                 {
-                        moves = possibleMovesPB(j,i);
-                        for(byte k = 0; k < moves.length; k ++)
+                    moves = possibleMovesPB(j,i);
+                    for(byte k = 0; k < moves.length; k ++)
+                    {
+                        if(moves[k][0] != (byte)100)
                         {
-                                if(moves[k][0] != (byte)100)
-                                {
-                                        //movePiece(i,j,moves[k][0], moves[k][1]);
-                                        attackboard[moves[k][0]][moves[k][1]] = (byte) (attackboard[moves[k][0]][moves[k][1]] + 1);
-                                }
+                                //movePiece(i,j,moves[k][0], moves[k][1]);
+                            attackboard[moves[k][0]][moves[k][1]] = (byte) (attackboard[moves[k][0]][moves[k][1]] + 1);
                         }
+                    }
                 }
                 else if (board[i][j] == (byte) -5)
                 {
-                        moves = possibleMovesN(j,i);
-                        for(byte k = 0; k < moves.length; k ++)
+                    moves = possibleMovesN(j,i);
+                    for(byte k = 0; k < moves.length; k ++)
+                    {
+                        if(moves[k][0] != (byte)100)
                         {
-                                if(moves[k][0] != (byte)100)
-                                {
-                                        //movePiece(i,j,moves[k][0], moves[k][1]);
-                                        attackboard[moves[k][0]][moves[k][1]] = (byte) (attackboard[moves[k][0]][moves[k][1]] + 1);
-                                }
+                            //movePiece(i,j,moves[k][0], moves[k][1]);
+                            attackboard[moves[k][0]][moves[k][1]] = (byte) (attackboard[moves[k][0]][moves[k][1]] + 1);
                         }
+                    }
                 }
                 else if (board[i][j] == (byte) -4)
                 {
-                        moves = possibleMovesBishop(j,i);
-                        for(byte k = 0; k < moves.length; k ++)
+                    moves = possibleMovesBishop(j,i);
+                    for(byte k = 0; k < moves.length; k ++)
+                    {
+                        if(moves[k][0] != (byte)100)
                         {
-                                if(moves[k][0] != (byte)100)
-                                {
-                                        //movePiece(i,j,moves[k][0], moves[k][1]);
-                                        //attackboard[moves[k][0]][moves[k][1]] = (byte) (attackboard[moves[k][0]][moves[k][1]] + 1);
-                                }
+                                //movePiece(i,j,moves[k][0], moves[k][1]);
+                                //attackboard[moves[k][0]][moves[k][1]] = (byte) (attackboard[moves[k][0]][moves[k][1]] + 1);
                         }
+                    }
                 }
             }
         }
@@ -438,21 +458,6 @@ public class Board {
         return evalNum;
     }
 
-    public void movePiece(byte y, byte x, byte y1, byte x1)
-    {
-        String retVal = "";
-        retVal += Math.abs(board[y][x]);
-        String pieceCaptured = Byte.toString(board[y1][x1]);
-        board[y1][x1] = board[y][x];
-        retVal += "" + y + "" + x + "" + y1 + "" + x1 + "" + pieceCaptured;
-        if(retVal.compareTo("60000") > 0)
-        {
-            //System.out.println();
-        }
-        chessMoves[depth] =  retVal;
-        board[y][x] = 0;
-    }
-
     public byte[][] possibleMovesPB(byte y, byte x)
     {
         byte[][] retVal = new byte[4][2];
@@ -466,7 +471,7 @@ public class Board {
             retVal[0][0] = (byte) 100;
             retVal[0][1] = (byte) 100;
         }
-        if(board[(byte)(y+2)][x] == 0 && board[y+1][(byte) (x)] == 0 && y == 1)
+        if(y == 1 && board[(byte)(y+2)][x] == 0 && board[y+1][(byte) (x)] == 0)
         {
             retVal[1][0] = (byte) (y+2);
             retVal[1][1] = x;
@@ -513,7 +518,7 @@ public class Board {
                 retVal[0][0] = (byte) 100;
                 retVal[0][1] = (byte) 100;
         }
-        if(board[y-2][(byte) (x)] == 0 && board[y-1][(byte) (x)] == 0 && y == 6)
+        if(y == 6 && board[y-2][(byte) (x)] == 0 && board[y-1][(byte) (x)] == 0)
         {
                 retVal[1][0] = (byte)(y-2);
                 retVal[1][1] = x;
@@ -1123,12 +1128,21 @@ public class Board {
     	
     }
     
-    public void castle(int turn)
+    public String castle()
     {
-    	
+    	if(colorWhite)
+    	{
+    		if(board[7][5] == 0 && board[7][6] == 0 && board[7][7] == 3 && board[7][4] == 1)
+    		{
+    			movePiece((byte)7,(byte)7,(byte)7,(byte)5);
+    			movePiece((byte)7,(byte)4,(byte)7,(byte)6);
+    			return "Rh1f1";
+    		}
+    	}
+    	return "";
     }
     
-     public void makeOtherPlayerMove(String lastMove)
+    public void makeOtherPlayerMove(String lastMove)
     {
     	//byte piece =  translatePiece(lastMove.charAt(0));
     	byte oldCol = translateColumn(lastMove.charAt(1));
@@ -1161,6 +1175,8 @@ public class Board {
     	{
     		movePiece(flipRow(oldRow), oldCol,flipRow(newRow), newCol);
     	}
+    	
+    	
     }
     
     private static String columnTranslate(int column)
@@ -1187,7 +1203,7 @@ public class Board {
                 return "Unknown";
         }
     }
-    public static byte translateColumn(char column)
+    private static byte translateColumn(char column)
     {
         switch (column)
         {
@@ -1235,30 +1251,6 @@ public class Board {
                 return "";
         }
     }
-    private static byte translatePiece(char piece)
-    {
-        switch (piece)
-        {
-            case 'B':
-                return 4;
-                
-            case 'K':
-                return 1;
-
-            case 'N':
-                return 5;
-
-            case 'Q':
-                return 2;
-
-            case 'R':
-                return 3;
-            case 'P':
-                return 6;
-            default:
-                return 0;
-        }
-    }
     
     private static String translateRow(byte row)
     {
@@ -1283,32 +1275,31 @@ public class Board {
             default:
                 return "";
         }
-    	
     }
     
-    private static String translateRowBlack(byte row)
+    private static byte rowTranslateBlack(byte row)
     {
-    	switch (row)
-        {
-            case 0:
-                return "1";                
-            case 1:
-                return "2";
-            case 2:
-                return "3";
-            case 3:
-                return "4";
-            case 4:
-                return "5";
-            case 5:
-                return "6";
-            case 6:
-                return "7";
-            case 7:
-                return "8";
-            default:
-                return "";
-        }
+    	 switch (row)
+         {
+             case 8:
+                 return 0;
+             case 7:
+                 return 1;
+             case 6:
+                 return 2;
+             case 5:
+                 return 3;
+             case 4:
+                 return 4;
+             case 3:
+                 return 5;
+             case 2:
+                 return 6;
+             case 1:
+                 return 7;
+             default:
+                 return 0;
+         }    	
     }
     
     private static byte flipRow(byte row)
@@ -1361,54 +1352,85 @@ public class Board {
          }      	
     }
     
-     private static byte rowTranslateWhite(byte row)
+    private static byte rowTranslateWhite(byte row)
     {
     	switch (row)
         {
             case 1:
-                return 7;
-            case 2:
-                return 6;
-            case 3:
-                return 5;
-            case 4:
-                return 4;
-            case 5:
-                return 3;
-            case 6:
-                return 2;
-            case 7:
-                return 1;
-            case 8:
                 return 0;
+            case 2:
+                return 1;
+            case 3:
+                return 2;
+            case 4:
+                return 3;
+            case 5:
+                return 4;
+            case 6:
+                return 5;
+            case 7:
+                return 6;
+            case 8:
+                return 7;
             default:
                 return 0;
         }
+   	
+    	
+    	
     }
     
-     private static byte rowTranslateBlack(byte row)
+    private static String translateRowBlack(byte row)
     {
-    	 switch (row)
-         {
-             case 8:
-                 return 7;
-             case 7:
-                 return 6;
-             case 6:
-                 return 5;
-             case 5:
-                 return 4;
-             case 4:
-                 return 3;
-             case 3:
-                 return 2;
-             case 2:
-                 return 1;
-             case 1:
-                 return 0;
-             default:
-                 return 0;
-         }    	
+    	switch (row)
+        {
+            case 0:
+                return "1";                
+            case 1:
+                return "2";
+            case 2:
+                return "3";
+            case 3:
+                return "4";
+            case 4:
+                return "5";
+            case 5:
+                return "6";
+            case 6:
+                return "7";
+            case 7:
+                return "8";
+            default:
+                return "";
+        }
+    	
+    	
+    	
+    }
+    
+    private static byte translatePiece(char piece)
+    {
+        switch (piece)
+        {
+            case 'B':
+                return 4;
+                
+            case 'K':
+                return 1;
+
+            case 'N':
+                return 5;
+
+            case 'Q':
+                return 2;
+
+            case 'R':
+                return 3;
+            case 'P':
+                return 6;
+            default:
+                return 0;
+        }
     }
     
 }

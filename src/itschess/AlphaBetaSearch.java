@@ -17,21 +17,21 @@ public class AlphaBetaSearch {
      
     public static String alphaBetaSearch()
     {
-        Byte a = -100; Byte b = 100;//should these be ints or Integers?
-        //board = new Board();
+        Integer a = -10000000; Integer b = 10000000;
+        
         int v = maxValue(a, b);
-        //v shouldnt be 100
-        //System.out.println(board);
+        System.out.println(AlphaBetaSearch.bestMoves[0]);
+        depth = 0;
         return AlphaBetaSearch.bestMoves[0];
     }
     
-    public static byte maxValue(Byte a, Byte b)
+    public static int maxValue(Integer a, Integer b)
     {//a = alpha, b = beta
-        byte tempA = -100;//holds max value
-        byte hold = -99;//holds the current max
+        int tempA = -10000000;//holds max value
+        int hold = -9999999;//holds the current max
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 3
+            if(depth != 2)//Begining by testing only to depth 4
             {
                 board.move(depth);
  //               System.out.println(board);
@@ -40,18 +40,23 @@ public class AlphaBetaSearch {
             }
             else
             {
-                hold = (byte) Evaluation.eval(board);
+                hold = (int) Evaluation.eval(board);
                 depth--;
                 //board.undo(depth);
                 return hold;
             }
+            if(hold == 10000000) //branch is done
+            {
+                depth--;
+                return tempA;
+            }
             
-            if(hold > tempA)
+            if(/*hold != 10000000 && */hold > tempA)
             {//If this move is the best found so far
                 bestMoves[depth] = board.chessMoves[depth];
                 tempA = hold;
             }
-            if(tempA >= b)      
+            if(/*hold != 10000000 && */tempA >= b)      
             {//If this branch is bad skip it
                 //board.undo(depth); //dont know if this should be removed
                 depth--;
@@ -73,13 +78,13 @@ public class AlphaBetaSearch {
         return tempA;
     }
     
-    public static byte minValue(Byte a, Byte b)
+    public static int minValue(Integer a, Integer b)
     {//a = alpha, b = beta
-        byte tempB = 100;//initial min value
-        byte hold = 99;//holds the current min
+        int tempB = 10000000;//initial min value
+        int hold = 9999999;//holds the current min
         while(!board.done)
         {
-            if(depth != 3)//Begining by testing only to depth 3
+            if(depth != 2)//Begining by testing only to depth 4
             {
                 board.move(depth);
   //              System.out.println(board);
@@ -88,18 +93,24 @@ public class AlphaBetaSearch {
             }
             else
             {	
-                hold = (byte) Evaluation.eval(board);
+                hold = (int) Evaluation.eval(board);
                 depth--;
                 //board.undo(depth);
                 return hold;
             }
             
-            if(hold < tempB)
+            if(hold == -10000000) //branch is done
+            {
+                depth--;
+                return tempB;
+            }
+            
+            if(/*hold != -10000000 && */hold < tempB)
             {//If this move is the best found so far
                 bestMoves[depth] = board.chessMoves[depth];
                 tempB = hold;
             }
-            if(tempB <= a)      
+            if(/*hold != -10000000 && */tempB <= a)      
             {//If this branch is bad skip it
                 //board.undo(depth); //dont know if this should be removed
                 depth--;
@@ -111,8 +122,8 @@ public class AlphaBetaSearch {
             
             board.undo(depth);
 //            System.out.println(board);
-            if(board.done)
-                System.out.println();//Never gets hit dont know why
+     //       if(board.done)
+            //    System.out.println();//Never gets hit dont know why
         }
         
         depth--;

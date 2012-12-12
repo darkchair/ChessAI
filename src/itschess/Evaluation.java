@@ -33,79 +33,79 @@ public class Evaluation {
             for(int j = 0; j < 8; j++)
             {
                 if(board[i][j] == 0)
-                        continue;
+                    continue;
                 else if(board[i][j] == 1)
                 {
-                        k ++;
-                        k += KingTable[(i)*8 + (j)];
+                    k ++;
+                    k += KingTable[(i)*8 + (j)];
                 }
                 else if(board[i][j] == -1)
                 {
-                        kb ++;
-                        kb += KingTable[Math.abs(i-7)* 8 + Math.abs(j-7)];//have to flip positions for black pieces
-                        // kingPenalty = KingTable[(i+1)*(j+1)];
-
+                    kb ++;
+                    kb += KingTable[Math.abs(i-7)* 8 + Math.abs(j-7)];//have to flip positions for black pieces
+                    // kingPenalty = KingTable[(i+1)*(j+1)];
                 }
                 else if(board[i][j] == 2)
                 {
-                        q ++;
+                    q ++;
                 }
                 else if(board[i][j] == -2)
                 {
-                        qb ++;
+                    qb ++;
                 }
                 else if(board[i][j] == 3)
                 {
-                        r ++;
-                        r += RookTable[(i)*8 + (j)];
+                    r ++;
+                    r += RookTable[(i)*8 + (j)];
                 }
                 else if(board[i][j] == -3)
                 {
-                        rb ++;
-                        rb += RookTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
+                    rb ++;
+                    rb += RookTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
                 }
                 else if(board[i][j] == 4)
                 {
-                        b ++;
-                        b += BishopTable[(i)*8 + (j)];
+                    b ++;
+                    b += BishopTable[(i)*8 + (j)];
                 }
                 else if(board[i][j] == -4)
                 {
-                        bb ++;
-                        bb += BishopTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
-                        //  bishopBonus -= BishopTable[(i+1)*(j+1)];
+                    bb ++;
+                    bb += BishopTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
+                    //  bishopBonus -= BishopTable[(i+1)*(j+1)];
                 }
                 else if(board[i][j] == 5)
                 {
-                        n ++;
-                        n += KnightTable[(i)*8 + (j)];
+                    n ++;
+                    n += KnightTable[(i)*8 + (j)];
                 }
                 else if(board[i][j] == -5)
                 {
-                        nb ++;
-                        nb += KnightTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
-                        //  knightBonus -= KnightTable[(i+1)*(j+1)];
+                    nb ++;
+                    nb += KnightTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
+                    //  knightBonus -= KnightTable[(i+1)*(j+1)];
                 }
                 else if(board[i][j] == 6)
                 {
-                        p ++;
-                        p += PawnTable[(i)*8 + (j)];
-                        if (i > 0 && board[i-1][j] == 6)
-                                d ++;
+                    p ++;
+                    p += PawnTable[(i)*8 + (j)];
+                    if (i > 0 && board[i-1][j] == 6)
+                            d ++;
                 }
                 else if(board[i][j] == -6)
                 {
-                        pb ++;
-                        pb += PawnTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
-                        //  pawnBonus -= PawnTable[(i+1)*(j+1)];
-                        if (i < 6 && board[i+1][j] == -6)
-                                db ++;
+                    pb ++;
+                    pb += PawnTable[Math.abs(i-7)* 8 + Math.abs(j-7)];
+                    //  pawnBonus -= PawnTable[(i+1)*(j+1)];
+                    if (i < 6 && board[i+1][j] == -6)
+                            db ++;
                 }
             }	
         }
         double evalNum = 200*(k-kb) + 9*(q-qb) + 5*(r-rb) +
         		3*((b-bb) + (n-nb)) + (p-pb) - .5*(d-db) + chessboard.boardScore;
-
+        //if((int) evalNum == -41)
+            System.out.println(chessboard);
         return evalNum;
     }
 
