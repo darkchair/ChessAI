@@ -17,7 +17,7 @@ public class AlphaBetaSearch {
      
     public static String alphaBetaSearch()
     {
-        Integer a = -10000000; Integer b = 10000000;
+        int[] a = new int[1]; a[0] = -10000000; int[] b = new int[1]; b[0] = 10000000;
         
         int v = maxValue(a, b);
         System.out.println(AlphaBetaSearch.bestMoves[0]);
@@ -25,7 +25,7 @@ public class AlphaBetaSearch {
         return AlphaBetaSearch.bestMoves[0];
     }
     
-    public static int maxValue(Integer a, Integer b)
+    public static int maxValue(int[] a, int[] b)
     {//a = alpha, b = beta
         int tempA = -10000000;//holds max value
         int hold = -9999999;//holds the current max
@@ -56,14 +56,16 @@ public class AlphaBetaSearch {
                 bestMoves[depth] = board.chessMoves[depth];
                 tempA = hold;
             }
-            if(/*hold != 10000000 && */tempA >= b)      
+            if(tempA > a[0])
+                a[0]= tempA;
+            if(/*hold != 10000000 && */tempA >= b[0])      
             {//If this branch is bad skip it
                 //board.undo(depth); //dont know if this should be removed
-                depth--;
-                return tempA;
+                //depth--;
+                //return tempA;
+                
+                continue;
             }
-            if(tempA > a)
-                a = tempA;
             
             board.undo(depth);
 //            System.out.println(board);
@@ -78,7 +80,7 @@ public class AlphaBetaSearch {
         return tempA;
     }
     
-    public static int minValue(Integer a, Integer b)
+    public static int minValue(int[] a, int[] b)
     {//a = alpha, b = beta
         int tempB = 10000000;//initial min value
         int hold = 9999999;//holds the current min
@@ -110,14 +112,14 @@ public class AlphaBetaSearch {
                 bestMoves[depth] = board.chessMoves[depth];
                 tempB = hold;
             }
-            if(/*hold != -10000000 && */tempB <= a)      
+            if(tempB < b[0])
+                b[0] = tempB;
+            if(/*hold != -10000000 && */tempB <= a[0])      
             {//If this branch is bad skip it
                 //board.undo(depth); //dont know if this should be removed
                 depth--;
                 return tempB;
             }
-            if(tempB < b)
-                b = tempB;
             
             
             board.undo(depth);
