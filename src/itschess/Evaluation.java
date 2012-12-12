@@ -104,8 +104,8 @@ public class Evaluation {
         }
         double evalNum = 200*(k-kb) + 9*(q-qb) + 5*(r-rb) +
         		3*((b-bb) + (n-nb)) + (p-pb) - .5*(d-db) + chessboard.boardScore;
-        //if((int) evalNum == -41)
-            //System.out.println(chessboard);
+        if((int) evalNum == 14)
+            System.out.println(chessboard);
         return evalNum;
     }
 
