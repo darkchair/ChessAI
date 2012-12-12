@@ -261,7 +261,7 @@ public class Board {
         if(chessMoves[depth] != null)
         {
             System.out.println(chessMoves[depth]);
-            if(chessMoves[depth].compareTo("Ph2h4") == 0);
+            if(chessMoves[depth].compareTo("61400-3") == 0);
                 System.out.println();
             byte oldX = Byte.parseByte(Character.toString(chessMoves[depth].charAt(2)));
             byte oldY = Byte.parseByte(Character.toString(chessMoves[depth].charAt(1)));
@@ -344,7 +344,7 @@ public class Board {
             }
             else if (Math.abs(board[y][x]) == (byte) 1)
             {
-                possibleMoves  = possibleMovesBishop(y,x);
+                possibleMoves  = possibleMovesK(y,x);
             }
             else 
                 possibleMoves = null;
@@ -478,8 +478,8 @@ public class Board {
         }
         else
         {
-            retVal[0][0] = (byte) 100;
-            retVal[0][1] = (byte) 100;
+            retVal[1][0] = (byte) 100;
+            retVal[1][1] = (byte) 100;
         }
         if(x<7 && y<7 && board[(byte)(y+1)][(byte)(x+1)] > 0)
         {
@@ -771,6 +771,14 @@ public class Board {
             retval[i][0] = (byte)(100);
             retval[i][1] = (byte)(100);
         }
+        
+        for(int i=0; i<14; i++)
+        {
+            if(retval[i][0] == 0)
+                retval[i][0] = 100;
+            if(retval[i][1] == 0)
+                retval[i][1] = 100;
+        }
 
         return retval;
     }
@@ -878,6 +886,14 @@ public class Board {
         {
             retval[i][0] = (byte)(100);
             retval[i][1] = (byte)(100);
+        }
+        
+        for(int i=0; i<13; i++)
+        {
+            if(retval[i][0] == 0)
+                retval[i][0] = 100;
+            if(retval[i][1] == 0)
+                retval[i][1] = 100;
         }
 
         return retval;
@@ -1081,11 +1097,99 @@ public class Board {
             retval[i][0] = (byte)(100);
             retval[i][1] = (byte)(100);
         }
+        
+        for(int i=0; i<27; i++)
+        {
+            if(retval[i][0] == 0)
+                retval[i][0] = 100;
+            if(retval[i][1] == 0)
+                retval[i][1] = 100;
+        }
 
         return retval;
 
     }
-
+    
+    public byte[][] possibleMovesK(byte y, byte x)
+    {
+        byte[][] retval = new byte[9][2];
+        
+        boolean white;
+        if( board[(byte) y][(byte) x] > 0 )
+        {
+            white = true;
+        }
+        else
+            white = false;
+        
+        if(y>0 && ((board[(byte) y-1][(byte) x] == 0)
+                || (white && board[(byte) y-1][(byte) x] < 0)
+                || (!white && board[(byte) y-1][(byte) x] > 0)))
+        {
+            retval[0][0] = (byte) (y-1);
+            retval[0][1] = (byte) (x);
+        }
+        if(y>0 && x>0 && ((board[(byte) y-1][(byte) x-1] == 0)
+                || (white && board[(byte) y-1][(byte) x-1] < 0)
+                || (!white && board[(byte) y-1][(byte) x-1] > 0)))
+        {
+            retval[0][0] = (byte) (y-1);
+            retval[0][1] = (byte) (x-1);
+        }
+        if(x>0 && ((board[(byte) y][(byte) x-1] == 0)
+                || (white && board[(byte) y][(byte) x-1] < 0)
+                || (!white && board[(byte) y][(byte) x-1] > 0)))
+        {
+            retval[0][0] = (byte) (y);
+            retval[0][1] = (byte) (x-1);
+        }
+        if(y<7 && x>0 && ((board[(byte) y+1][(byte) x-1] == 0)
+                || (white && board[(byte) y+1][(byte) x-1] < 0)
+                || (!white && board[(byte) y+1][(byte) x-1] > 0)))
+        {
+            retval[0][0] = (byte) (y+1);
+            retval[0][1] = (byte) (x-1);
+        }
+        if(y<7 && ((board[(byte) y+1][(byte) x] == 0)
+                || (white && board[(byte) y+1][(byte) x] < 0)
+                || (!white && board[(byte) y+1][(byte) x] > 0)))
+        {
+            retval[0][0] = (byte) (y+1);
+            retval[0][1] = (byte) (x);
+        }
+        if(y<7 && x<7 && ((board[(byte) y+1][(byte) x+1] == 0)
+                || (white && board[(byte) y+1][(byte) x+1] < 0)
+                || (!white && board[(byte) y+1][(byte) x+1] > 0)))
+        {
+            retval[0][0] = (byte) (y+1);
+            retval[0][1] = (byte) (x+1);
+        }
+        if(x<7 && ((board[(byte) y][(byte) x+1] == 0)
+                || (white && board[(byte) y][(byte) x+1] < 0)
+                || (!white && board[(byte) y][(byte) x+1] > 0)))
+        {
+            retval[0][0] = (byte) (y);
+            retval[0][1] = (byte) (x+1);
+        }
+        if(y>0 && x<7 && ((board[(byte) y-1][(byte) x+1] == 0)
+                || (white && board[(byte) y-1][(byte) x+1] < 0)
+                || (!white && board[(byte) y-1][(byte) x+1] > 0)))
+        {
+            retval[0][0] = (byte) (y-1);
+            retval[0][1] = (byte) (x+1);
+        }
+        
+        for(int i=0; i<9; i++)
+        {
+            if(retval[i][0] == 0)
+                retval[i][0] = 100;
+            if(retval[i][1] == 0)
+                retval[i][1] = 100;
+        }
+        
+        return retval;
+    }
+    
     @Override
     public String toString()
     {
