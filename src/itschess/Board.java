@@ -83,7 +83,8 @@ public class Board {
             {
                     attackboard[i][j] = 0;
             }
-        } */
+        } 
+        */
         
         //Isn't optimal in this test case, checkmate is N 31 to 12
         byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};

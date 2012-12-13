@@ -37,12 +37,12 @@ public class Evaluation {
                 else if(board[i][j] == 1)
                 {
                     k ++;
-                    k += KingTable[(i)*8 + (j)];
+                    k += (KingTable[(i)*8 + (j)])/50;
                 }
                 else if(board[i][j] == -1)
                 {
                     kb ++;
-                    kb += KingTable[Math.abs(i-7)* 8 + Math.abs(j-7)];//have to flip positions for black pieces
+                    kb += (KingTable[Math.abs(i-7)* 8 + Math.abs(j-7)])/50;//have to flip positions for black pieces
                     // kingPenalty = KingTable[(i+1)*(j+1)];
                 }
                 else if(board[i][j] == 2)
