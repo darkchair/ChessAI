@@ -136,15 +136,7 @@ public class Board {
             x = (byte)(fourthX);
             move = fourthMove;
         }
-        //gatherMoves(y, x);
-        //if(possibleMoves == null || move >= possibleMoves.length)
-        //{
-        //    if(possibleMoves != null )
-        //    {
-        //            y++;
-        //            x++;
-        //    }
-        //move = 0;
+        
         //Iterate through the board
         for(; y < 8; y++)
         {
@@ -247,9 +239,9 @@ public class Board {
         String pieceCaptured = Byte.toString(board[y1][x1]);
         board[y1][x1] = board[y][x];
         retVal += "" + y + "" + x + "" + y1 + "" + x1 + "" + pieceCaptured;
-        if(retVal.compareTo("531500") == 0)
+        if(retVal.compareTo("402240") == 0)
         {
-            //System.out.println();
+            System.out.println();
         }
         chessMoves[depth] =  retVal;
         board[y][x] = 0;
@@ -262,13 +254,13 @@ public class Board {
         {
             //System.out.println(chessMoves[depth]);
             String temp = chessMoves[depth];
-            if(temp.compareTo("531500") == 0)
-                ;//System.out.println();
+            if(temp.compareTo("402240") == 0)
+                System.out.println();
+            byte piece = Byte.parseByte(Character.toString(chessMoves[depth].charAt(0)));
             byte oldX = Byte.parseByte(Character.toString(chessMoves[depth].charAt(2)));
             byte oldY = Byte.parseByte(Character.toString(chessMoves[depth].charAt(1)));
             byte currX = Byte.parseByte(Character.toString(chessMoves[depth].charAt(4)));
             byte currY = Byte.parseByte(Character.toString(chessMoves[depth].charAt(3)));
-            byte piece = Byte.parseByte(Character.toString(chessMoves[depth].charAt(0)));
             char pc = chessMoves[depth].charAt(5);
             byte pieceCaptured;
             if(pc == '-')
@@ -276,27 +268,29 @@ public class Board {
             else
                 pieceCaptured = Byte.parseByte(Character.toString(chessMoves[depth].charAt(5)));
 
-            movePiece(currY,currX,oldY,oldX);//not supposed to use movePiece()?
+            
+            movePiece(currY,currX,oldY,oldX);
             board[currY][currX] = pieceCaptured;
 
             String tempStr = "";
-            if(colorWhite)
-            {
-            	tempStr += pieceTranslate(piece);
-            	tempStr += columnTranslate(oldX); tempStr += translateRow(oldY);
-                tempStr += columnTranslate(currX); tempStr += translateRow(currY); //tempStr += pieceCaptured;
-            }
-            else
-            {
-            	tempStr += pieceTranslate(piece);
-            	tempStr += columnTranslate(oldX); tempStr += translateRowBlack(oldY);
-                tempStr += columnTranslate(currX); tempStr += translateRowBlack(currY); //tempStr += pieceCaptured;
-            }
+//            if(colorWhite)
+//            {
+//            	tempStr += pieceTranslate(piece);
+//            	tempStr += columnTranslate(oldX); tempStr += translateRow(oldY);
+//                tempStr += columnTranslate(currX); tempStr += translateRow(currY); //tempStr += pieceCaptured;
+//            }
+//            else
+//            {
+//            	tempStr += pieceTranslate(piece);
+//            	tempStr += columnTranslate(oldX); tempStr += translateRowBlack(oldY);
+//                tempStr += columnTranslate(currX); tempStr += translateRowBlack(currY); //tempStr += pieceCaptured;
+//            }
             if(tempStr.compareTo("60000") > 0)
             {
                 //System.out.println();
             }
-            chessMoves[depth] = tempStr;
+            chessMoves[depth] = temp;
+            //chessMoves[depth] = tempStr;
             //System.out.println(tempStr);
         }
 
@@ -1248,7 +1242,7 @@ public class Board {
     
     public void makeOtherPlayerMove(String lastMove)
     {
-    	//byte piece =  translatePiece(lastMove.charAt(0));
+    	byte piece =  translatePiece(lastMove.charAt(0));
     	byte oldCol = translateColumn(lastMove.charAt(1));
     	byte oldRow = (byte) Integer.parseInt(lastMove.substring(2,3));
     	byte newCol = translateColumn(lastMove.charAt(3));
@@ -1266,6 +1260,7 @@ public class Board {
     
     public void makeOurMove(String ourMove)
     {
+        byte piece =  translatePiece(ourMove.charAt(0));
     	byte oldCol = translateColumn(ourMove.charAt(1));
     	byte oldRow = (byte) Integer.parseInt(ourMove.substring(2,3));
     	byte newCol = translateColumn(ourMove.charAt(3));

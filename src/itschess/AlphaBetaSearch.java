@@ -47,7 +47,7 @@ public class AlphaBetaSearch {
             }
             
             System.out.println(board.chessMoves[depth]);
-            System.out.println(board);
+            //System.out.println(board);
             if(hold == 10000000) //branch is done
             {
                 depth--;
@@ -106,6 +106,7 @@ public class AlphaBetaSearch {
             
             if(hold == -10000000) //branch is done
             {
+                //board.undo(depth);
                 depth--;
                 return tempB;
             }
@@ -117,7 +118,7 @@ public class AlphaBetaSearch {
             }
             if(tempB <= a)      
             {//If this branch is bad skip it
-                //board.undo(depth); //dont know if this should be removed
+                board.undo(depth); //dont know if this should be removed
                 depth--;
                 return tempB;
             }
