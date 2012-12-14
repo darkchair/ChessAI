@@ -31,21 +31,43 @@ public class ItsChess
     	//gameLoop();
         
         String move = AlphaBetaSearch.alphaBetaSearch();
-        byte piece = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(0)));
-        byte oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(2)));
-        byte oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(1)));
-        byte currX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(4)));
-        byte currY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(3)));
+        byte piece = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(0)));
+        byte oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(2)));
+        byte oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(1)));
+        byte currX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(4)));
+        byte currY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(3)));
         
         AlphaBetaSearch.board.movePiece(oldY, oldX, currY, currX);
         System.out.println(AlphaBetaSearch.board);
         
         move = AlphaBetaSearch.alphaBetaSearch();
-        piece = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(0)));
-        oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(2)));
-        oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(1)));
-        currX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(4)));
-        currY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(3)));
+        piece = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(0)));
+        oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(2)));
+        oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(1)));
+        currX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(4)));
+        currY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(3)));
+        
+        
+        AlphaBetaSearch.board.movePiece(oldY, oldX, currY, currX);
+        System.out.println(AlphaBetaSearch.board);
+        
+        move = AlphaBetaSearch.alphaBetaSearch();
+        piece = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(0)));
+        oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(2)));
+        oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(1)));
+        currX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(4)));
+        currY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(3)));
+        
+        
+        AlphaBetaSearch.board.movePiece(oldY, oldX, currY, currX);
+        System.out.println(AlphaBetaSearch.board);
+        
+        move = AlphaBetaSearch.alphaBetaSearch();
+        piece = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(0)));
+        oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(2)));
+        oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(1)));
+        currX = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(4)));
+        currY = Byte.parseByte(Character.toString(AlphaBetaSearch.bestMoves[0].charAt(3)));
         
         
         AlphaBetaSearch.board.movePiece(oldY, oldX, currY, currX);
@@ -56,7 +78,7 @@ public class ItsChess
     public static String fetchOtherMove() throws MalformedURLException, IOException
     {
     	String gameID = "85";
-        String head = "http://www.bencarle.com/chess/poll/311/2/1a77594c/";
+        String head = "http://www.bencarle.com/chess/poll/321/1/32c68cae/";
         String head2 = "http://www.bencarle.com/chess/poll/89/1/32c68cae/";
         String test;
         boolean moveRead = false;

@@ -137,7 +137,8 @@ public class Board {
             x = (byte)(fourthX);
             move = fourthMove;
         }
-        
+        if(y == 0 && x == 0)
+            System.out.println();
         //Iterate through the board
         for(; y < 8; y++)
         {
@@ -269,7 +270,8 @@ public class Board {
             else
                 pieceCaptured = Byte.parseByte(Character.toString(chessMoves[depth].charAt(5)));
 
-            
+            if(board[currY][currX] == 0)
+                return;
             movePiece(currY,currX,oldY,oldX);
             board[currY][currX] = pieceCaptured;
 
@@ -1476,9 +1478,6 @@ public class Board {
             default:
                 return 0;
         }
-   	
-    	
-    	
     }
     
     public static String translateRowBlack(byte row)
