@@ -1267,16 +1267,15 @@ public class Board {
     	byte newCol = translateColumn(ourMove.charAt(3));
     	byte newRow = (byte) Integer.parseInt(ourMove.substring(4,5));
     	
+        
     	if(!colorWhite)
     	{
-    		movePiece(flipRowB(oldRow), oldCol,flipRowB(newRow), newCol);
+            movePiece(oldRow, oldCol, newRow, newCol);
     	}
     	else
     	{
-    		movePiece(flipRow(oldRow), oldCol,flipRow(newRow), newCol);
+            movePiece(oldRow, oldCol, newRow, newCol);
     	}
-    	
-    	
     }
     
     public static String columnTranslate(int column)

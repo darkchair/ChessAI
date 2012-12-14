@@ -30,7 +30,26 @@ public class ItsChess
         
     	//gameLoop();
         
-        AlphaBetaSearch.alphaBetaSearch();
+        String move = AlphaBetaSearch.alphaBetaSearch();
+        byte piece = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(0)));
+        byte oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(2)));
+        byte oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(1)));
+        byte currX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(4)));
+        byte currY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(3)));
+        
+        AlphaBetaSearch.board.movePiece(oldY, oldX, currY, currX);
+        System.out.println(AlphaBetaSearch.board);
+        
+        move = AlphaBetaSearch.alphaBetaSearch();
+        piece = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(0)));
+        oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(2)));
+        oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(1)));
+        currX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(4)));
+        currY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(3)));
+        
+        
+        AlphaBetaSearch.board.movePiece(oldY, oldX, currY, currX);
+        System.out.println(AlphaBetaSearch.board);
         
     }
     

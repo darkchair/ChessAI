@@ -49,13 +49,18 @@ public class FetchOtherMove extends TimerTask
                 if(!otherMove.equals(""))
                     AlphaBetaSearch.board.makeOtherPlayerMove(otherMove);
 
+                
                 String move = "";
                 move = AlphaBetaSearch.alphaBetaSearch();
+                
                 byte piece = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(0)));
                 byte oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(2)));
                 byte oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(1)));
                 byte currX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(4)));
                 byte currY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(3)));
+                
+                AlphaBetaSearch.board.movePiece(oldY, oldX, currY, currX);
+                
                 move = "";
                 if(AlphaBetaSearch.board.colorWhite)
                 {
@@ -69,6 +74,7 @@ public class FetchOtherMove extends TimerTask
                         move += AlphaBetaSearch.board.columnTranslate(oldX); move += AlphaBetaSearch.board.translateRowBlack(oldY);
                         move += AlphaBetaSearch.board.columnTranslate(currX); move += AlphaBetaSearch.board.translateRowBlack(currY); //move += pieceCaptured;
                 }
+                
                 System.out.println(move);
                 //	if(Chess.turns == 4)
                 //		move = AlphaBetaSearch.board.castle();
@@ -80,7 +86,7 @@ public class FetchOtherMove extends TimerTask
         //    }
                 try {
                     sendMove(move);
-                    AlphaBetaSearch.board.makeOurMove(move);
+                    //AlphaBetaSearch.board.makeOurMove(move);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
