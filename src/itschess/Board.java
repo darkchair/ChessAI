@@ -50,7 +50,7 @@ public class Board {
 
     public Board ()
     {
-    	/*
+    	
     	byte[] holder = {-3,-5,-4,-2,-1,-4,-5,-3};
         board[0] = holder; 
         for(int i = 0; i < 8; i ++)
@@ -84,8 +84,8 @@ public class Board {
                     attackboard[i][j] = 0;
             }
         } 
-        */
         
+        /*
         //Isn't optimal in this test case, checkmate is N 31 to 12
         byte[] hold1 = {-3,0,-4,-5,-1,-4,0,-3};
         System.arraycopy(hold1, 0, board[0], 0, 8);
@@ -103,7 +103,7 @@ public class Board {
         System.arraycopy(hold7, 0, board[6], 0, 8);
         byte[] hold8 = {3,0,4,0,1,0,0,3};
         System.arraycopy(hold8, 0, board[7], 0, 8);
-        
+        */
     }
     
     public void move(int d)

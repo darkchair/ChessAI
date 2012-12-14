@@ -70,7 +70,6 @@ public class ItsChess
     
     public static void gameLoop() throws MalformedURLException, IOException 
     {
-    	//timer.schedule(new FetchOtherMove(), 5 * 1000);
-        
+    	//timer.schedule(new FetchOtherMove(), 5 * 1000);   
     }
 }

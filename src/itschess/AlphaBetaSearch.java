@@ -31,7 +31,7 @@ public class AlphaBetaSearch {
         int hold = -9999999;//holds the current max
         while(!board.done)
         {
-            if(depth != 2)//Begining by testing only to depth 4
+            if(depth != 3)//Begining by testing only to depth 4
             {
                 board.move(depth);
  //               System.out.println(board);
@@ -46,7 +46,7 @@ public class AlphaBetaSearch {
                 return hold;
             }
             
-            System.out.println(board.chessMoves[depth]);
+            //System.out.println(board.chessMoves[depth]);
             //System.out.println(board);
             if(hold == 10000000) //branch is done
             {
@@ -62,6 +62,7 @@ public class AlphaBetaSearch {
             {//If this branch is bad skip it
                 if(a != -10000000 && depth != 0)
                 {
+                    board.undo(depth);
                     depth--;
                     return tempA;
                 }
@@ -70,10 +71,10 @@ public class AlphaBetaSearch {
                 a = tempA;
             
             board.undo(depth);
-            System.out.println(board);
+            //System.out.println(board);
             
             if(board.done)
-                System.out.println();//Never gets hit dont know why
+                ;//System.out.println();//Never gets hit dont know why
         }
         //board.chessMoves[depth] = null;
         depth--;
@@ -89,7 +90,7 @@ public class AlphaBetaSearch {
         int hold = 9999999;//holds the current min
         while(!board.done)
         {
-            if(depth != 2)//Begining by testing only to depth 4
+            if(depth != 3)//Begining by testing only to depth 4
             {
                 board.move(depth);
   //              System.out.println(board);
@@ -118,7 +119,7 @@ public class AlphaBetaSearch {
             }
             if(tempB <= a)      
             {//If this branch is bad skip it
-                board.undo(depth); //dont know if this should be removed
+                board.undo(depth);
                 depth--;
                 return tempB;
             }
