@@ -58,7 +58,7 @@ public class AlphaBetaSearch {
             if(/*hold != 10000000 && */hold > tempA)
             {//If this move is the best found so far
                 if(depth == 0)
-                    System.out.println();
+                    ;//System.out.println();
                 if(hold != 10000000)
                 {
                     bestMoves[depth] = board.chessMoves[depth];
