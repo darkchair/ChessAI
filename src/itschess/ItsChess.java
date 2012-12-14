@@ -37,7 +37,7 @@ public class ItsChess
     public static String fetchOtherMove() throws MalformedURLException, IOException
     {
     	String gameID = "85";
-        String head = "http://www.bencarle.com/chess/poll/154/2/1a77594c/";
+        String head = "http://www.bencarle.com/chess/poll/311/2/1a77594c/";
         String head2 = "http://www.bencarle.com/chess/poll/89/1/32c68cae/";
         String test;
         boolean moveRead = false;

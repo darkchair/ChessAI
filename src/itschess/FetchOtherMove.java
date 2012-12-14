@@ -19,13 +19,15 @@ import java.util.logging.Logger;
  *
  * @author Ian
  */
-public class FetchOtherMove extends TimerTask{
+public class FetchOtherMove extends TimerTask
+{
     
-    public void run(){
+    public void run()
+    {
         AlphaBetaSearch.board.colorWhite = false;
         String gameID = "85";
         String head = "http://www.bencarle.com/chess/poll/120/2/1a77594c/";
-        String head2 = "http://www.bencarle.com/chess/poll/154/2/1a77594c/";
+        String head2 = "http://www.bencarle.com/chess/poll/311/2/1a77594c/";
         String test;
         boolean moveRead = false;
         String otherMove = "";
@@ -42,12 +44,31 @@ public class FetchOtherMove extends TimerTask{
         if(testfas.equals("true"))
         {
                 moveRead = true;
-                String move;
+                
                 otherMove = serverText.substring(serverText.lastIndexOf(":")+3, serverText.lastIndexOf("}")-1);
                 if(!otherMove.equals(""))
                     AlphaBetaSearch.board.makeOtherPlayerMove(otherMove);
 
+                String move = "";
                 move = AlphaBetaSearch.alphaBetaSearch();
+                byte piece = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(0)));
+                byte oldX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(2)));
+                byte oldY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(1)));
+                byte currX = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(4)));
+                byte currY = Byte.parseByte(Character.toString(AlphaBetaSearch.board.chessMoves[AlphaBetaSearch.board.depth].charAt(3)));
+                move = "";
+                if(AlphaBetaSearch.board.colorWhite)
+                {
+                        move += AlphaBetaSearch.board.pieceTranslate(piece);
+                        move += AlphaBetaSearch.board.columnTranslate(oldX); move += AlphaBetaSearch.board.translateRow(oldY);
+                        move += AlphaBetaSearch.board.columnTranslate(currX); move += AlphaBetaSearch.board.translateRow(currY); //move += pieceCaptured;
+                }
+                else
+                {
+                        move += AlphaBetaSearch.board.pieceTranslate(piece);
+                        move += AlphaBetaSearch.board.columnTranslate(oldX); move += AlphaBetaSearch.board.translateRowBlack(oldY);
+                        move += AlphaBetaSearch.board.columnTranslate(currX); move += AlphaBetaSearch.board.translateRowBlack(currY); //move += pieceCaptured;
+                }
                 System.out.println(move);
                 //	if(Chess.turns == 4)
                 //		move = AlphaBetaSearch.board.castle();
@@ -76,7 +97,7 @@ public class FetchOtherMove extends TimerTask{
     }
 
     public void sendMove(String move) throws IOException {
-        URL url = new URL("http://www.bencarle.com/chess/move/154/2/1a77594c/" + move + "/");
+        URL url = new URL("http://www.bencarle.com/chess/move/311/2/1a77594c/" + move + "/");
         URLConnection connection = url.openConnection();
         InputStream in = connection.getInputStream();
         BufferedReader res = new BufferedReader(new InputStreamReader(in, "UTF-8"));

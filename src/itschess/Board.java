@@ -1279,7 +1279,7 @@ public class Board {
     	
     }
     
-    private static String columnTranslate(int column)
+    public static String columnTranslate(int column)
     {
         switch (column)
         {
@@ -1304,7 +1304,7 @@ public class Board {
         }
     }
     
-    private static byte translateColumn(char column)
+    public static byte translateColumn(char column)
     {
         switch (column)
         {
@@ -1329,7 +1329,7 @@ public class Board {
         }
     }
     
-    private static String pieceTranslate(byte piece)
+    public static String pieceTranslate(byte piece)
     {
         switch (piece)
         {
@@ -1354,7 +1354,7 @@ public class Board {
         }
     }
     
-    private static String translateRow(byte row)
+    public static String translateRow(byte row)
     {
     	switch (row)
         {
@@ -1379,7 +1379,7 @@ public class Board {
         }
     }
     
-    private static byte rowTranslateBlack(byte row)
+    public static byte rowTranslateBlack(byte row)
     {
     	 switch (row)
          {
@@ -1404,7 +1404,7 @@ public class Board {
          }    	
     }
     
-    private static byte flipRow(byte row)
+    public static byte flipRow(byte row)
     {
     	 switch (row)
          {
@@ -1429,7 +1429,7 @@ public class Board {
          }      	
     }
     
-    private static byte flipRowB(byte row)
+    public static byte flipRowB(byte row)
     {
     	 switch (row)
          {
@@ -1454,7 +1454,7 @@ public class Board {
          }      	
     }
     
-    private static byte rowTranslateWhite(byte row)
+    public static byte rowTranslateWhite(byte row)
     {
     	switch (row)
         {
@@ -1482,7 +1482,7 @@ public class Board {
     	
     }
     
-    private static String translateRowBlack(byte row)
+    public static String translateRowBlack(byte row)
     {
     	switch (row)
         {
@@ -1510,7 +1510,7 @@ public class Board {
     	
     }
     
-    private static byte translatePiece(char piece)
+    public static byte translatePiece(char piece)
     {
         switch (piece)
         {
